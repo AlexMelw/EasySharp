@@ -1,3 +1,3 @@
 # EasySharp
 
-## A few useful .NET Helpers 
+A few useful .NET Helpers 
