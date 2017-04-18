@@ -11,8 +11,8 @@ namespace EasySharp.NHelpers
         /// <summary>
         /// Sets each element to its default value
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
+        /// <typeparam name="T">Any available type</typeparam>
+        /// <param name="array">Array which elements should be initialized (or set to defaults)</param>
         public static void SetToDefaults<T>(this T[] array)
         {
             for (int i = 0; i < array.Length; i++)
