@@ -45,7 +45,7 @@
     <Compile Include="EnumerableHelper.cs" />
     <Compile Include="LinkedListHelper.cs" />
     <Compile Include="ListHelper.cs" />
-    <Compile Include="ObjectConvertionHelper.cs" />
+    <Compile Include="ObjectHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="ThreadHelper.cs" />
