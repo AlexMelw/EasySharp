@@ -26,5 +26,18 @@ namespace EasySharp.NHelpers
         /// <param name="targetType">Variable provided for type inference</param>
         /// <returns>Wrapper casted to the inferred anonymous type</returns>
         public static T CastTo<T>(this object value, T targetType) => (T) value;
+
+        /// <summary>
+        /// SwapElementsAt two values
+        /// </summary>
+        /// <typeparam name="T">Type of elements to be swapped</typeparam>
+        /// <param name="lhs">Left-hand side value</param>
+        /// <param name="rhs">Right-hand side value</param>
+        private static void Swap<T>(ref T lhs, ref T rhs)
+        {
+            T aux = lhs;
+            lhs = rhs;
+            rhs = aux;
+        }
     }
 }

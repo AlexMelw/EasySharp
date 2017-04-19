@@ -7,7 +7,7 @@ namespace EasySharp.NHelpers
     public static class LinkedListHelper
     {
         /// <summary>
-        ///     Sorts source <see cref="LinkedList{T}" /> in ascending order
+        ///     Sorts source of type <see cref="LinkedList{T}" /> in ascending order
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
         /// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector" />.</typeparam>
@@ -23,7 +23,7 @@ namespace EasySharp.NHelpers
         }
 
         /// <summary>
-        ///     Sorts source <see cref="LinkedList{T}" /> in descending order
+        ///     Sorts source of type <see cref="LinkedList{T}" /> in descending order
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
         /// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector" />.</typeparam>
@@ -39,7 +39,7 @@ namespace EasySharp.NHelpers
         }
 
         /// <summary>
-        ///     Sorts the copy of source <see cref="LinkedList{T}" /> in ascending order
+        ///     Sorts the copy of source of type <see cref="LinkedList{T}" /> in ascending order
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
         /// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector" />.</typeparam>
@@ -56,7 +56,7 @@ namespace EasySharp.NHelpers
         }
 
         /// <summary>
-        ///     Sorts the copy of source <see cref="LinkedList{T}" /> in descending order
+        ///     Sorts the copy of source of type <see cref="LinkedList{T}" /> in descending order
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
         /// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector" />.</typeparam>

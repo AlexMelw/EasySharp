@@ -43,6 +43,7 @@
     <Compile Include="ArrayHelper.cs" />
     <Compile Include="DictionaryHelper.cs" />
     <Compile Include="EnumerableHelper.cs" />
+    <Compile Include="ICollectionHelper.cs" />
     <Compile Include="LinkedListHelper.cs" />
     <Compile Include="ListHelper.cs" />
     <Compile Include="ObjectHelper.cs" />

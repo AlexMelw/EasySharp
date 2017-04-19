@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace EasySharp.NHelpers
 {
     // NO DOCUMENTATION
+    // DO NOT USE YET
     // TODO To be reviewed
     public static class ThreadHelper
     {
