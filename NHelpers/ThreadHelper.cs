@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace EasySharp.NHelpers
 {
+    // NO DOCUMENTATION
+    // TODO To be reviewd
     public static class ThreadHelper
     {
         public interface IThreadExecutionStageBuilder

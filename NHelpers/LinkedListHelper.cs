@@ -52,7 +52,6 @@ namespace EasySharp.NHelpers
             LinkedList<TSource> tempLinkedList = new LinkedList<TSource>();
             IEnumerable<TSource> orderedEnumerable = source.OrderBy(keySelector).AsEnumerable();
             orderedEnumerable.ForEach(value => tempLinkedList.AddLast(value));
-
             return tempLinkedList;
         }
 
@@ -70,7 +69,6 @@ namespace EasySharp.NHelpers
             LinkedList<TSource> tempLinkedList = new LinkedList<TSource>();
             IEnumerable<TSource> orderedEnumerable = source.OrderByDescending(keySelector).AsEnumerable();
             orderedEnumerable.ForEach(value => tempLinkedList.AddLast(value));
-
             return tempLinkedList;
         }
     }
