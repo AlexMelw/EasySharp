@@ -27,7 +27,6 @@ namespace EasySharp.NHelpers
         public static IList<T> Shuffle<T>(this IList<T> source)
         {
             IList<T> sourceCopy = new List<T>(source);
-
             Random rnd = new Random();
 
             for (int i = source.Count - 1; i > 0; i--)
