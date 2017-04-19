@@ -9,16 +9,16 @@ namespace EasySharp.NHelpers
 {
     public static class ListHelper
     {
-        public static void AddIfNotContains<T>(this IList<T> list, T value)
+        public static void AddIfNotContains<T>(this IList<T> source, T value)
         {
-            if (!list.Contains(value)) list.Add(value);
+            if (!source.Contains(value)) source.Add(value);
         }
-        public static void Shuffle<T>(this IList<T> list)
+        public static void Shuffle<T>(this IList<T> source)
         {
             Random rnd = new Random();
 
-            for (int i = list.Count - 1; i > 0; i--)
-                Swap(list[i], list[rnd.Next(0, i)]);
+            for (int i = source.Count - 1; i > 0; i--)
+                Swap(source[i], source[rnd.Next(0, i)]);
         }
 
         private static void Swap<T>(T lhs, T rhs)

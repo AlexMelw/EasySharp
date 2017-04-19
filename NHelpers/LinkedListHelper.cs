@@ -1,43 +1,74 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasySharp.NHelpers
 {
     public static class LinkedListHelper
     {
-        public static void SelfSortAscending<TSource, TKey>(this LinkedList<TSource> linkedList, Func<TSource, TKey> keySelector)
+        /// <summary>
+        ///     Sorts source <see cref="LinkedList{T}" /> in ascending order
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
+        /// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector" />.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="keySelector">A function to extract a key from an element.</param>
+        public static void SelfSortAscending<TSource, TKey>(this LinkedList<TSource> source,
+            Func<TSource, TKey> keySelector)
         {
-            LinkedList<TSource> tempLinkedList = new LinkedList<TSource>(linkedList);
-            linkedList.Clear();
+            LinkedList<TSource> tempLinkedList = new LinkedList<TSource>(source);
+            source.Clear();
             IEnumerable<TSource> orderedEnumerable = tempLinkedList.OrderBy(keySelector).AsEnumerable();
-            orderedEnumerable.ForEach(value => linkedList.AddLast(value));
-        }
-        public static void SelfSortDescending<TSource, TKey>(this LinkedList<TSource> linkedList, Func<TSource, TKey> keySelector)
-        {
-            LinkedList<TSource> tempLinkedList = new LinkedList<TSource>(linkedList);
-            linkedList.Clear();
-            IEnumerable<TSource> orderedEnumerable = tempLinkedList.OrderByDescending(keySelector).AsEnumerable();
-            orderedEnumerable.ForEach(value => linkedList.AddLast(value));
+            orderedEnumerable.ForEach(value => source.AddLast(value));
         }
 
-        public static LinkedList<TSource> SortedDescending<TSource, TKey>(this LinkedList<TSource> list,
+        /// <summary>
+        ///     Sorts source <see cref="LinkedList{T}" /> in descending order
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
+        /// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector" />.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="keySelector">A function to extract a key from an element.</param>
+        public static void SelfSortDescending<TSource, TKey>(this LinkedList<TSource> source,
+            Func<TSource, TKey> keySelector)
+        {
+            LinkedList<TSource> tempLinkedList = new LinkedList<TSource>(source);
+            source.Clear();
+            IEnumerable<TSource> orderedEnumerable = tempLinkedList.OrderByDescending(keySelector).AsEnumerable();
+            orderedEnumerable.ForEach(value => source.AddLast(value));
+        }
+
+        /// <summary>
+        ///     Sorts the copy of source <see cref="LinkedList{T}" /> in ascending order
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
+        /// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector" />.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="keySelector">A function to extract a key from an element.</param>
+        /// <returns>An <see cref="LinkedList{T}"/> (where <c>T</c> is <typeparamref name="TSource"/>) whose elements are sorted in ascending order according to a key.</returns>
+        public static LinkedList<TSource> SortedAscending<TSource, TKey>(this LinkedList<TSource> source,
             Func<TSource, TKey> keySelector)
         {
             LinkedList<TSource> tempLinkedList = new LinkedList<TSource>();
-            IEnumerable<TSource> orderedEnumerable = list.OrderByDescending(keySelector).AsEnumerable();
+            IEnumerable<TSource> orderedEnumerable = source.OrderBy(keySelector).AsEnumerable();
             orderedEnumerable.ForEach(value => tempLinkedList.AddLast(value));
 
             return tempLinkedList;
         }
 
-        public static LinkedList<TSource> SortedAscending<TSource, TKey>(this LinkedList<TSource> list,
+        /// <summary>
+        ///     Sorts the copy of source <see cref="LinkedList{T}" /> in descending order
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
+        /// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector" />.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="keySelector">A function to extract a key from an element.</param>
+        /// <returns>An <see cref="LinkedList{T}"/> (where <c>T</c> is <typeparamref name="TSource"/>) whose elements are sorted in descending order according to a key.</returns>
+        public static LinkedList<TSource> SortedDescending<TSource, TKey>(this LinkedList<TSource> source,
             Func<TSource, TKey> keySelector)
         {
             LinkedList<TSource> tempLinkedList = new LinkedList<TSource>();
-            IEnumerable<TSource> orderedEnumerable = list.OrderBy(keySelector).AsEnumerable();
+            IEnumerable<TSource> orderedEnumerable = source.OrderByDescending(keySelector).AsEnumerable();
             orderedEnumerable.ForEach(value => tempLinkedList.AddLast(value));
 
             return tempLinkedList;

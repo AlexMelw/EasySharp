@@ -14,7 +14,7 @@ namespace EasySharp.NHelpers
             return enumerable.LongCount().Equals(0L);
         }
 
-        public static bool IsEmpty<T>(this IEnumerable enumerable)
+        public static bool IsEmpty(this IEnumerable enumerable)
         {
             return enumerable.Cast<object>().LongCount().Equals(0L);
         }
