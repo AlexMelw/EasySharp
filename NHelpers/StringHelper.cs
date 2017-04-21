@@ -105,5 +105,16 @@ namespace EasySharp.NHelpers
         /// <returns>Comma separated string</returns>
         public static string CommaSeparatedString(this IEnumerable<string> source) => source.Aggregate(
             (s1, s2) => $"{s1}, {s2}");
+
+        /// <summary>
+        ///     Aggregates the <paramref name="source" /> that is a collection of variable number of arguments or an array of arguments of 
+        ///     <see cref="string" /> type.
+        /// </summary>
+        /// <param name="source">
+        ///     <see cref="string" />s collection source that will be aggregated into a single comma-separated
+        ///     <see cref="string" />
+        /// </param>
+        /// <returns>Comma separated string</returns>
+        public static string CommaSeparatedString(params string[] source) => source.CommaSeparatedString();
     }
 }

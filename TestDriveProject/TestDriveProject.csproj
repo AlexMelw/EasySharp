@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CE539F18-A5EB-4C24-93A8-AD5CA25C95D9}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NHelpers</RootNamespace>
-    <AssemblyName>NHelpers</AssemblyName>
+    <ProjectGuid>{2583995B-2CC6-4C17-A00D-DC60588EE0A2}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TestDriveProject</RootNamespace>
+    <AssemblyName>TestDriveProject</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,18 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayHelper.cs" />
-    <Compile Include="DictionaryHelper.cs" />
-    <Compile Include="EnumerableHelper.cs" />
-    <Compile Include="ICollectionHelper.cs" />
-    <Compile Include="LinkedListHelper.cs" />
-    <Compile Include="ListHelper.cs" />
-    <Compile Include="LookupHelper.cs" />
-    <Compile Include="ObjectHelper.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringHelper.cs" />
-    <Compile Include="TestDrive.cs" />
-    <Compile Include="ThreadHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NHelpers\NHelpers.csproj">
+      <Project>{ce539f18-a5eb-4c24-93a8-ad5ca25c95d9}</Project>
+      <Name>NHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ResharperCSharpSourceTemplates\ResharperCSharpSourceTemplates.csproj">
+      <Project>{58d0346b-7c0e-4992-95ed-82f2016d7267}</Project>
+      <Name>ResharperCSharpSourceTemplates</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
