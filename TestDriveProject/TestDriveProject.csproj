@@ -49,13 +49,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NHelpers\NHelperss.csproj">
+    <ProjectReference Include="..\NHelpers\NHelpers.csproj">
       <Project>{cac83cf1-e5d4-45f6-85cc-e0ad29b55a8e}</Project>
-      <Name>NHelperss</Name>
+      <Name>NHelpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ReSharperCustomSourceTemplates\ReSharperCustomSourceTemplatess.csproj">
+    <ProjectReference Include="..\ReSharperCustomSourceTemplates\ReSharperCustomSourceTemplates.csproj">
       <Project>{c0fd7790-58f0-437b-a18f-1e870545a782}</Project>
-      <Name>ReSharperCustomSourceTemplatess</Name>
+      <Name>ReSharperCustomSourceTemplates</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
