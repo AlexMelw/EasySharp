@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CE539F18-A5EB-4C24-93A8-AD5CA25C95D9}</ProjectGuid>
+    <ProjectGuid>{CAC83CF1-E5D4-45F6-85CC-E0AD29B55A8E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EasySharp.NHelpers</RootNamespace>
