@@ -53,9 +53,9 @@
       <Project>{ce539f18-a5eb-4c24-93a8-ad5ca25c95d9}</Project>
       <Name>NHelpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ResharperCSharpSourceTemplates\ResharperCSharpSourceTemplates.csproj">
-      <Project>{58d0346b-7c0e-4992-95ed-82f2016d7267}</Project>
-      <Name>ResharperCSharpSourceTemplates</Name>
+    <ProjectReference Include="..\ReSharperCSharpSourceTemplates\ReSharperCSharpSourceTemplates.csproj">
+      <Project>{55544125-f9d8-4e01-b109-607a4d40aaaa}</Project>
+      <Name>ReSharperCSharpSourceTemplates</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

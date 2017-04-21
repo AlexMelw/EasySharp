@@ -7,7 +7,7 @@
     <ProjectGuid>{CE539F18-A5EB-4C24-93A8-AD5CA25C95D9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NHelpers</RootNamespace>
+    <RootNamespace>EasySharp.NHelpers</RootNamespace>
     <AssemblyName>NHelpers</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -50,7 +50,6 @@
     <Compile Include="ObjectHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringHelper.cs" />
-    <Compile Include="TestDrive.cs" />
     <Compile Include="ThreadHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

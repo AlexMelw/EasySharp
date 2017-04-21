@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ResharperCSharpSourceTemplates")]
+[assembly: AssemblyTitle("ReSharperCSharpSourceTemplates")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ResharperCSharpSourceTemplates")]
+[assembly: AssemblyProduct("ReSharperCSharpSourceTemplates")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("58d0346b-7c0e-4992-95ed-82f2016d7267")]
+[assembly: Guid("55544125-f9d8-4e01-b109-607a4d40aaaa")]
 
 // Version information for an assembly consists of the following four values:
 //
