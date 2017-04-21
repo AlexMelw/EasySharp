@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EasySharp.NHelpers;
-using EasySharp.ReSharperCSharpSourceTemplates;
 
 namespace TestDriveProject
 {
@@ -16,7 +15,6 @@ namespace TestDriveProject
 
             foreach (var element in ints)
                 Console.WriteLine(element);
-            
         }
     }
 }

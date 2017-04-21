@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace EasySharp.ReSharperCSharpSourceTemplates
+namespace EasySharp.ReSharperCustomSourceTemplates
 {
     public static class ReSharperHelper
     {
