@@ -125,12 +125,45 @@ namespace EasySharp.NHelpers
         }
 
         /// <summary>
+        ///     Aggregates an <paramref name="source" /> of type <see cref="IEnumerable{T}" /> where <c>T</c> is
+        ///     <see cref="string" />
+        /// </summary>
+        /// <param name="source">
+        ///     <see cref="string" />s collection plainTextSource that will be aggregated into a single comma-separated
+        ///     <see cref="string" /> with a dot at the end.
+        /// </param>
+        /// <returns>Comma separated string</returns>
+        public static string CommaSeparatedStringWithEndingDot(this IEnumerable<string> source)
+        {
+            return source.Aggregate(
+                string.Empty,
+                (s1, s2) => $"{s1}, {s2}",
+                result => $"{result.Substring(2, result.Length - 2)}."
+            );
+        }
+
+        /// <summary>
+        ///     Aggregates the <paramref name="source" /> that is a collection of variable number of arguments or an array of
+        ///     arguments of
+        ///     <see cref="string" /> type.
+        /// </summary>
+        /// <param name="source">
+        ///     <see cref="string" />s collection plainTextSource that will be aggregated into a single comma-separated
+        ///     <see cref="string" /> with a dot at the end.
+        /// </param>
+        /// <returns>Comma separated string</returns>
+        public static string CommaSeparatedStringWithEndingDot(params string[] source)
+        {
+            return source.CommaSeparatedStringWithEndingDot();
+        }
+
+        /// <summary>
         ///     Decodes the encoded <paramref name="base64EncodedDataSource" /> by Base64 (MIME) scheme.
         /// </summary>
         /// <remarks>You should use Base64 whenever you intend to transmit binary data in a textual format.</remarks>
         /// <param name="base64EncodedDataSource">Encoded <see cref="string" /> by Base64 scheme.</param>
         /// <returns></returns>
-        public static string GetStringDecodedFromBase64String(this string base64EncodedDataSource)
+        public static string ToDecodedStringFromBase64(this string base64EncodedDataSource)
         {
             return Encoding.UTF8.GetString(Convert.FromBase64String(base64EncodedDataSource));
         }
@@ -145,6 +178,46 @@ namespace EasySharp.NHelpers
         public static string ToBase64String(this string plainTextSource)
         {
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(plainTextSource));
+        }
+
+        /// <summary>
+        ///     Converts and gets ASCII Encoded Bytes out of a string (<paramref name="source" />)
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>Array of bytes</returns>
+        public static byte[] ToAsciiEncodedByteArray(this string source)
+        {
+            return Encoding.ASCII.GetBytes(source.ToCharArray());
+        }
+
+        /// <summary>
+        ///     Converts and gets byte array into ASCII Encoded string
+        /// </summary>
+        /// <param name="sourceBytes"></param>
+        /// <returns></returns>
+        public static string ToAsciiString(this byte[] sourceBytes)
+        {
+            return Encoding.ASCII.GetString(sourceBytes);
+        }
+
+        /// <summary>
+        ///     Converts and gets UTF8 Encoded Bytes out of a string (<paramref name="source" />)
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>Array of bytes</returns>
+        public static byte[] ToUtf8EncodedByteArray(this string source)
+        {
+            return Encoding.UTF8.GetBytes(source.ToCharArray());
+        }
+
+        /// <summary>
+        ///     Converts and gets byte array into UTF8 Encoded string
+        /// </summary>
+        /// <param name="sourceBytes"></param>
+        /// <returns></returns>
+        public static string ToUtf8String(this byte[] sourceBytes)
+        {
+            return Encoding.UTF8.GetString(sourceBytes);
         }
     }
 }
