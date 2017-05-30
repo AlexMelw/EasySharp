@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace EasySharp.NHelpers
+﻿namespace EasySharp.NHelpers.ExtensionMethods
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class LookupHelper
     {
         /// <summary>

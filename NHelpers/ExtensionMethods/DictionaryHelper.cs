@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace EasySharp.NHelpers
+﻿namespace EasySharp.NHelpers.ExtensionMethods
 {
+    using System;
+    using System.Collections.Generic;
+
     public static class DictionaryHelper
     {
         /// <summary>

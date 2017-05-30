@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace EasySharp.NHelpers
+﻿namespace EasySharp.NHelpers.ExtensionMethods
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public static class StringHelper
     {
         /// <summary>

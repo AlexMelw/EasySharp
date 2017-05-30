@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasySharp.NHelpers
+﻿namespace EasySharp.NHelpers.ExtensionMethods
 {
+    using System.Collections.Generic;
+
     public static class ICollectionHelper
     {
         /// <summary>
