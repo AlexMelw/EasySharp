@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods\ArrayHelper.cs" />
+    <Compile Include="ExtensionMethods\TwodimensionalArrayHelper.cs" />
     <Compile Include="ExtensionMethods\DictionaryHelper.cs" />
     <Compile Include="ExtensionMethods\EnumerableHelper.cs" />
     <Compile Include="ExtensionMethods\ICollectionHelper.cs" />
@@ -48,12 +49,12 @@
     <Compile Include="ExtensionMethods\ListHelper.cs" />
     <Compile Include="ExtensionMethods\LookupHelper.cs" />
     <Compile Include="ExtensionMethods\ObjectHelper.cs" />
+    <Compile Include="Wrappers\TcpListenerEx.cs" />
+    <Compile Include="Wrappers\ThreadWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExtensionMethods\StringHelper.cs" />
     <Compile Include="ExtensionMethods\ThreadHelper.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Wrappers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

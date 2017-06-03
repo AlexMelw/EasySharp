@@ -8,6 +8,18 @@
     /// </summary>
     public class TcpListenerEx : TcpListener
     {
+        /// <summary>
+        ///     Gets a value that indicates whether <see cref="T:System.Net.Sockets.TcpListener" /> is not actively listening
+        ///     for client connections.
+        /// </summary>
+        /// <returns>true if <see cref="T:System.Net.Sockets.TcpListener" /> is not actively listening; otherwise, false.</returns>
+        public bool Inactive => !base.Active;
+
+        /// <summary>
+        ///     Gets a value that indicates whether <see cref="T:System.Net.Sockets.TcpListener" /> is actively listening for
+        ///     client connections.
+        /// </summary>
+        /// <returns>true if <see cref="T:System.Net.Sockets.TcpListener" /> is actively listening; otherwise, false.</returns>
         public new bool Active => base.Active;
 
         #region CONSTRUCTORS
