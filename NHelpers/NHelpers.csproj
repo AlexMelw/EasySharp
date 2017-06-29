@@ -43,7 +43,7 @@
     <Compile Include="ExtensionMethods\ArrayHelper.cs" />
     <Compile Include="ExtensionMethods\TwodimensionalArrayHelper.cs" />
     <Compile Include="ExtensionMethods\DictionaryHelper.cs" />
-    <Compile Include="ExtensionMethods\EnumerableHelper.cs" />
+    <Compile Include="ExtensionMethods\IEnumerableHelper.cs" />
     <Compile Include="ExtensionMethods\ICollectionHelper.cs" />
     <Compile Include="ExtensionMethods\LinkedListHelper.cs" />
     <Compile Include="ExtensionMethods\ListHelper.cs" />

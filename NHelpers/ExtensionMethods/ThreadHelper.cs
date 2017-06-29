@@ -100,14 +100,14 @@
 
                 if (missingIdentifiers.Count() != 0)
                 {
-                    string commaSeparatedMissingIdentifiers = missingIdentifiers.Aggregate(
-                        seed: string.Empty,
-                        func: (accumulator, id) => $"{id}, {accumulator}",
-                        resultSelector: accumulator => accumulator.Substring(0, accumulator.Length - 2));
+                    //string commaSeparatedMissingIdentifiers = missingIdentifiers.Aggregate(
+                    //    seed: string.Empty,
+                    //    func: (accumulator, id) => $"{id}, {accumulator}",
+                    //    resultSelector: accumulator => accumulator.Substring(0, accumulator.Length - 2));
 
                     string exceptionMessage = $"The integrity of Thread Wrappers Identifiers Sequence is broken. " +
                                               Environment.NewLine +
-                                              $"The missing Thread Wrappers Identifiers are: {commaSeparatedMissingIdentifiers}";
+                                              $"The missing Thread Wrappers Identifiers are: {missingIdentifiers.CommaSeparatedStringWithEndingDot()}";
 
                     throw new Exception(exceptionMessage);
                 }
@@ -125,7 +125,8 @@
                     string commaSeparatedDublicateIdentifiers = dublicates
                         .Aggregate(
                             seed: string.Empty,
-                            func: (accumulator, idGroup) => $"{idGroup.Key} (occurrences: {idGroup.Count()}), {accumulator}",
+                            func: (accumulator, idGroup) =>
+                                $"{idGroup.Key} (occurrences: {idGroup.Count()}), {accumulator}",
                             resultSelector: accumulator => accumulator.Substring(0, accumulator.Length - 2));
 
                     string exceptionMessage =
