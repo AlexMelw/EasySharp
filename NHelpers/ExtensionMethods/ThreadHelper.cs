@@ -31,7 +31,6 @@
         ///     </para>
         /// </summary>
         /// <example>
-        /// 
         ///            var builtThreadExecutionOrder = Thread.CurrentThread
         ///                .InitThreadExecutionOrder()
         ///                .StageThread(2, () =&gt; Console.WriteLine($"Thread_2 executed"), 0, 1)
@@ -69,35 +68,6 @@
 
             /// <summary>
             ///     <para>Builds the Threads Execution Sequence.</para>
-            ///     <para>The method is defined by <see cref="IThreadAutomaticExecutionOrderBuilder" /> interface.</para>
-            /// </summary>
-            /// <remarks>All properties <see cref="ThreadWrapper.ThreadWrapperIdentifier" /> are negative</remarks>
-            /// <returns></returns>
-            IThreadExecutionBuiltOrder IThreadAutomaticExecutionOrderBuilder.Build()
-            {
-                if (_isBuilt) return this;
-
-                if (_threadWrappersChain.Any(wrapper => wrapper.ThreadWrapperIdentifier >= 0))
-                {
-                    throw new Exception(
-                        $@"There are manually set properties ""{nameof(ThreadWrapper.ThreadWrapperIdentifier)}""");
-                }
-
-                foreach (var threadWrapper in _threadWrappersChain)
-                {
-                    foreach (int awaitedThreadIndex in threadWrapper.WaitForThreads)
-                    {
-                        _threadWrappersChain[awaitedThreadIndex]
-                            .InjectCountsownEvent(threadWrapper.PersonalCountdownEvent);
-                    }
-                }
-                _isBuilt = true;
-
-                return this;
-            }
-
-            /// <summary>
-            ///     <para>Builds the Threads Execution Sequence.</para>
             ///     <para>The method is defined by <see cref="IThreadManualExecutionOrderBuilder" /> interface.</para>
             /// </summary>
             /// <remarks>All properties <see cref="ThreadWrapper.ThreadWrapperIdentifier" /> are nonnegative</remarks>
@@ -109,7 +79,61 @@
                 if (_threadWrappersChain.Any(wrapper => wrapper.ThreadWrapperIdentifier < 0))
                 {
                     throw new Exception(
-                        $@"There are not set several properties ""{nameof(ThreadWrapper.ThreadWrapperIdentifier)}""");
+                        $@"There haven't been set several properties ""{
+                                nameof(ThreadWrapper.ThreadWrapperIdentifier)
+                            }""");
+                }
+
+                int minThreadWrapperIdentifier = _threadWrappersChain.Min(wrapper => wrapper.ThreadWrapperIdentifier);
+                int maxThreadWrapperIdentifier = _threadWrappersChain.Max(wrapper => wrapper.ThreadWrapperIdentifier);
+
+                List<int> validSequenceOfThreadWrappersIdentifiers =
+                    Enumerable.Range(minThreadWrapperIdentifier, maxThreadWrapperIdentifier + 1).ToList();
+
+                List<int> threadWrappersIdentifiers = _threadWrappersChain
+                    .Select(wrapper => wrapper.ThreadWrapperIdentifier).ToList();
+
+                List<int> intersection = validSequenceOfThreadWrappersIdentifiers
+                    .Intersect(threadWrappersIdentifiers).ToList();
+
+                List<int> missingIdentifiers = validSequenceOfThreadWrappersIdentifiers.Except(intersection).ToList();
+
+                if (missingIdentifiers.Count() != 0)
+                {
+                    string commaSeparatedMissingIdentifiers = missingIdentifiers.Aggregate(
+                        seed: string.Empty,
+                        func: (accumulator, id) => $"{id}, {accumulator}",
+                        resultSelector: accumulator => accumulator.Substring(0, accumulator.Length - 2));
+
+                    string exceptionMessage = $"The integrity of Thread Wrappers Identifiers Sequence is broken. " +
+                                              Environment.NewLine +
+                                              $"The missing Thread Wrappers Identifiers are: {commaSeparatedMissingIdentifiers}";
+
+                    throw new Exception(exceptionMessage);
+                }
+
+
+                List<int> distinctThreadWrappersIdentifiers = threadWrappersIdentifiers.Distinct().ToList();
+
+                if (distinctThreadWrappersIdentifiers.Count != threadWrappersIdentifiers.Count)
+                {
+                    var dublicates = threadWrappersIdentifiers
+                        .GroupBy(id => id)
+                        .Where(group => group.Count() >= 2)
+                        .ToList();
+
+                    string commaSeparatedDublicateIdentifiers = dublicates
+                        .Aggregate(
+                            seed: string.Empty,
+                            func: (accumulator, idGroup) => $"{idGroup.Key} (occurrences: {idGroup.Count()}), {accumulator}",
+                            resultSelector: accumulator => accumulator.Substring(0, accumulator.Length - 2));
+
+                    string exceptionMessage =
+                        $"The integrity of Thread Wrappers Identifiers Disctinct Sequence is broken. " +
+                        Environment.NewLine +
+                        $"The dublicates are: {commaSeparatedDublicateIdentifiers}";
+
+                    throw new Exception(exceptionMessage);
                 }
 
                 _threadWrappersChain = _threadWrappersChain
@@ -168,6 +192,29 @@
             }
 
             /// <summary>
+            /// <para>Runs the Threads Execution Sequence if it was built successfully, otherwise throws an exception.</para>
+            /// </summary>
+            void IThreadExecutionBuiltOrder.RunStagedThreadsChain()
+            {
+                RunStagedThreadsChain();
+            }
+
+            private void RunStagedThreadsChain()
+            {
+                if (!_isBuilt)
+                {
+                    throw new Exception("Threads Execution Sequence wasn't built.");
+                }
+
+                foreach (var threadWrapper in _threadWrappersChain)
+                {
+                    threadWrapper.Run();
+                }
+            }
+
+            #region Obsolete Methods (Reason: Not recommended. The Thread Wrapper Identifiers should be set manually)
+
+            /// <summary>
             ///     <para>
             ///         Stages the <see cref="Expression{Action}" /> as a <see cref="ThreadWrapper" /> within the Thread Execution
             ///         Order.
@@ -177,7 +224,7 @@
             /// <param name="thread"></param>
             /// <param name="waitForThreads"></param>
             /// <returns></returns>
-            [Obsolete("Not recommended. Set manually the thread wrapper identifier instead.")]
+            [Obsolete("Not recommended. Set manually the Thread Wrapper Identifier instead.")]
             IThreadAutomaticExecutionStageBuilder IThreadAutomaticExecutionStageBuilder.StageThread(
                 Expression<Action> thread,
                 params int[] waitForThreads)
@@ -191,25 +238,38 @@
             }
 
             /// <summary>
-            /// <para>Runs the Threads Execution Sequence if it was built successfully, otherwise throws an exception.</para>
+            ///     <para>Builds the Threads Execution Sequence.</para>
+            ///     <para>The method is defined by <see cref="IThreadAutomaticExecutionOrderBuilder" /> interface.</para>
             /// </summary>
-            void IThreadExecutionBuiltOrder.RunStagedThreadsChain()
+            /// <remarks>All properties <see cref="ThreadWrapper.ThreadWrapperIdentifier" /> are negative</remarks>
+            /// <returns></returns>
+            [Obsolete("Not recommended. The Thread Wrapper Identifiers should be set manually")]
+            IThreadExecutionBuiltOrder IThreadAutomaticExecutionOrderBuilder.Build()
             {
-                RunStagedThreadsChain();
-            }
+                if (_isBuilt) return this;
 
-            private void RunStagedThreadsChain()
-            {
-                if (!_isBuilt)
+                if (_threadWrappersChain.Any(wrapper => wrapper.ThreadWrapperIdentifier >= 0))
                 {
-                    throw new Exception("Threads Execution Sequence is not built.");
+                    throw new Exception(
+                        $@"There haven't been set several properties ""{
+                                nameof(ThreadWrapper.ThreadWrapperIdentifier)
+                            }""");
                 }
 
                 foreach (var threadWrapper in _threadWrappersChain)
                 {
-                    threadWrapper.Run();
+                    foreach (int awaitedThreadIndex in threadWrapper.WaitForThreads)
+                    {
+                        _threadWrappersChain[awaitedThreadIndex]
+                            .InjectCountsownEvent(threadWrapper.PersonalCountdownEvent);
+                    }
                 }
+                _isBuilt = true;
+
+                return this;
             }
+
+            #endregion
         }
     }
 
@@ -237,6 +297,7 @@
     /// </summary>
     public interface IThreadAutomaticExecutionStageBuilder : IThreadAutomaticExecutionOrderBuilder
     {
+        [Obsolete("Not recommended. Set manually the Thread Wrapper Identifier instead.", error: true)]
         IThreadAutomaticExecutionStageBuilder StageThread(Expression<Action> thread, params int[] waitForThreads);
     }
 
@@ -254,6 +315,7 @@
     ///     The <c>StageThread()</c> method returns an instance of the class that implements
     ///     <see cref="IThreadAutomaticExecutionOrderBuilder" />
     /// </summary>
+    [Obsolete("Not recommended. The Thread Wrapper Identifiers should be set manually")]
     public interface IThreadAutomaticExecutionOrderBuilder
     {
         IThreadExecutionBuiltOrder Build();
