@@ -49,8 +49,8 @@
     <Compile Include="ExtensionMethods\ListHelper.cs" />
     <Compile Include="ExtensionMethods\LookupHelper.cs" />
     <Compile Include="ExtensionMethods\ObjectHelper.cs" />
-    <Compile Include="Wrappers\TcpListenerEx.cs" />
-    <Compile Include="Wrappers\ThreadWrapper.cs" />
+    <Compile Include="Wrappers\Networking\TcpListenerEx.cs" />
+    <Compile Include="Wrappers\Threading\ThreadWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExtensionMethods\StringHelper.cs" />
     <Compile Include="ExtensionMethods\ThreadHelper.cs" />

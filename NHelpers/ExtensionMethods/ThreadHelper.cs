@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading;
-    using Wrappers;
+    using Wrappers.Threading;
 
     public static class ThreadHelper
     {
@@ -100,11 +100,6 @@
 
                 if (missingIdentifiers.Count() != 0)
                 {
-                    //string commaSeparatedMissingIdentifiers = missingIdentifiers.Aggregate(
-                    //    seed: string.Empty,
-                    //    func: (accumulator, id) => $"{id}, {accumulator}",
-                    //    resultSelector: accumulator => accumulator.Substring(0, accumulator.Length - 2));
-
                     string exceptionMessage = $"The integrity of Thread Wrappers Identifiers Sequence is broken. " +
                                               Environment.NewLine +
                                               $"The missing Thread Wrappers Identifiers are: {missingIdentifiers.CommaSeparatedStringWithEndingDot()}";

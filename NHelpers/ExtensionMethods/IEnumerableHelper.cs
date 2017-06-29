@@ -7,6 +7,22 @@
 
     public static class IEnumerableHelper
     {
+        /// <summary>Determines whether exists any element of a sequence that satisfies a condition.</summary>
+        /// <param name="source">
+        ///     An <see cref="T:System.Collections.Generic.IEnumerable`1" /> whose elements to apply the predicate
+        ///     to.
+        /// </param>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
+        /// <returns>true if exists any element in the source sequence that passed the test in the specified predicate; otherwise, false.</returns>
+        /// <exception cref="T:System.ArgumentNullException">
+        ///     <paramref name="source" /> or <paramref name="predicate" /> is null.
+        /// </exception>
+        public static bool Exists<TSource>(this IEnumerable<TSource> source, Predicate<TSource> predicate)
+        {
+            return source.Any(predicate);
+        }
+
         /// <summary>
         ///     Returns <c>true</c> if sequence is empty, otherwise returns <c>false</c>
         /// </summary>
