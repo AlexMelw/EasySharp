@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EasySharp.NHelpers;
+﻿// ReSharper disable ArgumentsStyleNamedExpression
 
 namespace TestDriveProject
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            int[] ints = new int[] { 8, 2, 1, 6, 4, 5, 3, 4, 5 };
+    using System;
 
-            foreach (var element in ints)
-                Console.WriteLine(element);
+    internal class Program
+    {
+        private static void Main(string[] args)
+        {
+            int[] ints = { 8, 2, 1, 6, 4, 5, 3, 4, 5 };
+
+            Console.Out.WriteLine("ints = {0}", arg0: ints);
+            Console.Out.WriteLine("ints = {0}", ints);
         }
     }
 }
