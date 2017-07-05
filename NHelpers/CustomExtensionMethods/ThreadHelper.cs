@@ -1,11 +1,11 @@
-﻿namespace EasySharp.NHelpers.ExtensionMethods
+﻿namespace EasySharp.NHelpers.CustomExtensionMethods
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading;
-    using Wrappers.Threading;
+    using CustomWrappers.Threading;
 
     public static class ThreadHelper
     {
@@ -293,7 +293,6 @@
     /// </summary>
     public interface IThreadAutomaticExecutionStageBuilder : IThreadAutomaticExecutionOrderBuilder
     {
-        [Obsolete("Not recommended. Set manually the Thread Wrapper Identifier instead.", error: true)]
         IThreadAutomaticExecutionStageBuilder StageThread(Expression<Action> thread, params int[] waitForThreads);
     }
 
@@ -311,7 +310,6 @@
     ///     The <c>StageThread()</c> method returns an instance of the class that implements
     ///     <see cref="IThreadAutomaticExecutionOrderBuilder" />
     /// </summary>
-    [Obsolete("Not recommended. The Thread Wrapper Identifiers should be set manually")]
     public interface IThreadAutomaticExecutionOrderBuilder
     {
         IThreadExecutionBuiltOrder Build();

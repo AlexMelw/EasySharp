@@ -1,12 +1,27 @@
-﻿namespace EasySharp.NHelpers.ExtensionMethods
+﻿namespace EasySharp.NHelpers.CustomExtensionMethods
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
 
     public static class StringHelper
     {
+        /// <summary>Returns a value indicating whether a specified substring occurs within this string.</summary>
+        /// <param name="text">Text in which has to be searched the key string <paramref name="value"/> </param>
+        /// <param name="value">The string to seek. </param>
+        /// <returns>
+        ///     <see langword="true" /> if the <paramref name="value" /> parameter occurs within this string, or if
+        ///     <paramref name="value" /> is the empty string (""); otherwise, <see langword="false" />.
+        /// </returns>
+        /// <remarks>Cannot be applied in case of LINQ to Entities query.</remarks>
+        /// <exception cref="T:System.ArgumentNullException">
+        ///     <paramref name="value" /> is <see langword="null" />.
+        /// </exception>
+        public static bool ContainsIgnoreCase(this string text, string value)
+        {
+            return text.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+
         /// <summary>
         ///     Counts occurences of <paramref name="subString" /> is <paramref name="source" />
         /// </summary>
@@ -14,7 +29,7 @@
         /// <param name="source"></param>
         /// <param name="subStr"></param>
         /// <returns>Number of occurences of <paramref name="subStr" /> is <paramref name="source" /></returns>
-        public static int CountOccurencesOrdinalCaseInsensitive(this string source, string subStr)
+        public static int CountOccurencesOrdinalIgnoreCase(this string source, string subStr)
         {
             return CountOccurenceInSource(source, subStr, StringComparison.OrdinalIgnoreCase);
         }

@@ -1,4 +1,4 @@
-﻿namespace EasySharp.NHelpers.ExtensionMethods
+﻿namespace EasySharp.NHelpers.CustomExtensionMethods
 {
     using System;
     using System.Collections;
@@ -18,7 +18,7 @@
         /// <exception cref="T:System.ArgumentNullException">
         ///     <paramref name="source" /> or <paramref name="predicate" /> is null.
         /// </exception>
-        public static bool Exists<TSource>(this IEnumerable<TSource> source, Predicate<TSource> predicate)
+        public static bool Exists<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return source.Any(predicate);
         }

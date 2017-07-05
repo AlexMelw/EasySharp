@@ -1,6 +1,7 @@
-﻿namespace EasySharp.NHelpers.ExtensionMethods
+﻿namespace EasySharp.NHelpers.CustomExtensionMethods
 {
     using System.Linq;
+
     public static class TwodimensionalArrayHelper
     {
         public static int[][] MultiplyBy(this int[][] leftMatrix, int[][] rightMatrix)

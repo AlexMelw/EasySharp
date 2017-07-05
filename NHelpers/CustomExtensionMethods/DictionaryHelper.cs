@@ -1,4 +1,4 @@
-﻿namespace EasySharp.NHelpers.ExtensionMethods
+﻿namespace EasySharp.NHelpers.CustomExtensionMethods
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-namespace EasySharp.NHelpers.Wrappers.Threading
+namespace EasySharp.NHelpers.CustomWrappers.Threading
 {
     using System;
     using System.Collections.Generic;

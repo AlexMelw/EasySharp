@@ -1,4 +1,4 @@
-﻿namespace EasySharp.NHelpers.Wrappers.Networking
+﻿namespace EasySharp.NHelpers.CustomWrappers.Networking
 {
     using System.Net;
     using System.Net.Sockets;

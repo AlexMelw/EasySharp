@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,21 +41,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtensionMethods\ArrayHelper.cs" />
-    <Compile Include="ExtensionMethods\TwodimensionalArrayHelper.cs" />
-    <Compile Include="ExtensionMethods\DictionaryHelper.cs" />
-    <Compile Include="ExtensionMethods\IEnumerableHelper.cs" />
-    <Compile Include="ExtensionMethods\ICollectionHelper.cs" />
-    <Compile Include="ExtensionMethods\LinkedListHelper.cs" />
-    <Compile Include="ExtensionMethods\ListHelper.cs" />
-    <Compile Include="ExtensionMethods\LookupHelper.cs" />
-    <Compile Include="ExtensionMethods\ObjectHelper.cs" />
-    <Compile Include="Wrappers\Networking\TcpListenerEx.cs" />
-    <Compile Include="Wrappers\Threading\ThreadWrapper.cs" />
+    <Compile Include="CustomExtensionMethods\ArrayHelper.cs" />
+    <Compile Include="CustomExtensionMethods\ExceptionHelper.cs" />
+    <Compile Include="CustomExtensionMethods\TwodimensionalArrayHelper.cs" />
+    <Compile Include="CustomExtensionMethods\DictionaryHelper.cs" />
+    <Compile Include="CustomExtensionMethods\IEnumerableHelper.cs" />
+    <Compile Include="CustomExtensionMethods\ICollectionHelper.cs" />
+    <Compile Include="CustomExtensionMethods\LinkedListHelper.cs" />
+    <Compile Include="CustomExtensionMethods\ListHelper.cs" />
+    <Compile Include="CustomExtensionMethods\LookupHelper.cs" />
+    <Compile Include="CustomExtensionMethods\ObjectHelper.cs" />
+    <Compile Include="CustomWrappers\Networking\TcpListenerEx.cs" />
+    <Compile Include="CustomWrappers\Threading\ThreadWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ExtensionMethods\StringHelper.cs" />
-    <Compile Include="ExtensionMethods\ThreadHelper.cs" />
+    <Compile Include="CustomExtensionMethods\StringHelper.cs" />
+    <Compile Include="CustomExtensionMethods\ThreadHelper.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
