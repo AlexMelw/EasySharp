@@ -22,6 +22,20 @@
         ///         <c>ContinueOnCapturedContext()</c>. It does the same thing, but just differentiates it from
         ///         <c>ConfigureAwait(false)</c> in a more visual manner.
         ///     </para>
+        ///     <list type="number">
+        ///         <item>
+        ///             The synchronization context's job is simply to coordinate communication with a resource (UI thread,
+        ///             request context, etc).
+        ///         </item>
+        ///         <item>
+        ///             When execution continues after an await, generated code ensures that the code runs on the same
+        ///             synchronization context that it did before(by default).
+        ///         </item>
+        ///         <item>
+        ///             Use <c>ConfigureAwait(false)</c> to tell async code that it does not have to continue on the same context.
+        ///             It's important to use this in library code to prevent deadlocks.
+        ///         </item>
+        ///     </list>
         /// </remarks>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="task"><see cref="Task{TResult}" /> to be awaited</param>
