@@ -1,0 +1,37 @@
+﻿namespace EasySharp.NHelpers.CustomExtensionMethods
+{
+    using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
+
+    public static class TaskHelper
+    {
+        /// <summary>
+        ///     It does the same thing as <c>ConfigureAwait(false)</c>, but just differentiates it in a more visual manner.
+        /// </summary>
+        /// <remarks>
+        ///     <para>
+        ///         I prefer to always state explicitly how I want the task continuation to occur. So even though a
+        ///         <see cref="Task" />'s default is <c>ConfigureAwait(true)</c>, I still specify it as such so that I am always
+        ///         cognizant of what's happening
+        ///         "under the hood".
+        ///     </para>
+        ///     <para>
+        ///         However, when you look at a lot of code, some with <c>ConfigureAwait(true)</c> and some with
+        ///         <c>ConfigureAwait(false)</c>, it's not easy to spot where they differ. So I use either
+        ///         <c>ConfigureAwait(false)</c>, or a useful extension method,
+        ///         <c>ContinueOnCapturedContext()</c>. It does the same thing, but just differentiates it from
+        ///         <c>ConfigureAwait(false)</c> in a more visual manner.
+        ///     </para>
+        /// </remarks>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="task"><see cref="Task{TResult}" /> to be awaited</param>
+        /// <returns>
+        ///     <see cref="ConfiguredTaskAwaitable{TResult}" /> that provides an awaitable object that enables configured
+        ///     awaits on a task.
+        /// </returns>
+        public static ConfiguredTaskAwaitable<TResult> ContinueOnCapturedContext<TResult>(this Task<TResult> task)
+        {
+            return task.ConfigureAwait(true);
+        }
+    }
+}

@@ -23,48 +23,48 @@
 
 
         /// <summary>
-        ///     Counts occurences of <paramref name="subString" /> is <paramref name="source" />
+        ///     Counts occurrences of <paramref name="subString" /> is <paramref name="source" />
         /// </summary>
-        /// <remarks>Default string comparision mode is <see cref="StringComparison.OrdinalIgnoreCase" /></remarks>
+        /// <remarks>Default string comparison mode is <see cref="StringComparison.OrdinalIgnoreCase" /></remarks>
         /// <param name="source"></param>
         /// <param name="subStr"></param>
-        /// <returns>Number of occurences of <paramref name="subStr" /> is <paramref name="source" /></returns>
+        /// <returns>Number of occurrences of <paramref name="subStr" /> is <paramref name="source" /></returns>
         public static int CountOccurencesOrdinalIgnoreCase(this string source, string subStr)
         {
             return CountOccurenceInSource(source, subStr, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
-        ///     Counts occurences of <paramref name="subString" /> is <paramref name="source" />
+        ///     Counts occurrences of <paramref name="subString" /> is <paramref name="source" />
         /// </summary>
-        /// <remarks>Default string comparision mode is <see cref="StringComparison.InvariantCultureIgnoreCase" /></remarks>
+        /// <remarks>Default string compassion mode is <see cref="StringComparison.InvariantCultureIgnoreCase" /></remarks>
         /// <param name="source"></param>
         /// <param name="subString"></param>
-        /// <returns>Number of occurences of <paramref name="subString" /> is <paramref name="source" /></returns>
+        /// <returns>Number of occurrences of <paramref name="subString" /> is <paramref name="source" /></returns>
         public static int CountOccurencesInvariantCultureIgnoreCase(this string source, string subString)
         {
             return CountOccurenceInSource(source, subString, StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>
-        ///     Counts occurences of <paramref name="subString" /> is <paramref name="source" />
+        ///     Counts occurrences of <paramref name="subString" /> is <paramref name="source" />
         /// </summary>
-        /// <remarks>Default string comparision mode is <see cref="StringComparison.Ordinal" /></remarks>
+        /// <remarks>Default string comparison mode is <see cref="StringComparison.Ordinal" /></remarks>
         /// <param name="source"></param>
         /// <param name="subString"></param>
-        /// <returns>Number of occurences of <paramref name="subString" /> is <paramref name="source" /></returns>
+        /// <returns>Number of occurrences of <paramref name="subString" /> is <paramref name="source" /></returns>
         public static int CountOccurencesOrdinal(this string source, string subString)
         {
             return CountOccurenceInSource(source, subString, StringComparison.Ordinal);
         }
 
         /// <summary>
-        ///     Counts occurences of <paramref name="subString" /> is <paramref name="source" />
+        ///     Counts occurrences of <paramref name="subString" /> is <paramref name="source" />
         /// </summary>
-        /// <remarks>Default string comparision mode is <see cref="StringComparison.InvariantCulture" /></remarks>
+        /// <remarks>Default string comparison mode is <see cref="StringComparison.InvariantCulture" /></remarks>
         /// <param name="source"></param>
         /// <param name="subString"></param>
-        /// <returns>Number of occurences of <paramref name="subString" /> is <paramref name="source" /></returns>
+        /// <returns>Number of occurrences of <paramref name="subString" /> is <paramref name="source" /></returns>
         public static int CountOccurencesInvariantCulture(this string source, string subString)
         {
             return CountOccurenceInSource(source, subString, StringComparison.InvariantCulture);
@@ -72,13 +72,13 @@
 
 
         /// <summary>
-        ///     Counts occurences of <paramref name="subString" /> is <paramref name="source" />
+        ///     Counts occurrences of <paramref name="subString" /> is <paramref name="source" />
         /// </summary>
-        /// <remarks>Default string comparision mode is <see cref="StringComparison.Ordinal" /></remarks>
+        /// <remarks>Default string comparison mode is <see cref="StringComparison.Ordinal" /></remarks>
         /// <param name="source"></param>
         /// <param name="subString">search key</param>
         /// <param name="stringComparisonMode"></param>
-        /// <returns>Number of occurences of <paramref name="subString" /> is <paramref name="source" /></returns>
+        /// <returns>Number of occurrences of <paramref name="subString" /> is <paramref name="source" /></returns>
         public static int CountOccurences(this string source, string subString,
             StringComparison stringComparisonMode = StringComparison.Ordinal)
         {
@@ -86,12 +86,12 @@
         }
 
         /// <summary>
-        ///     Counts occurences of <paramref name="subString" /> is <paramref name="source" />
+        ///     Counts occurrences of <paramref name="subString" /> is <paramref name="source" />
         /// </summary>
         /// <param name="source"></param>
         /// <param name="subString"></param>
         /// <param name="mode"></param>
-        /// <returns>Number of occurences of <paramref name="subStr" /> is <paramref name="source" /></returns>
+        /// <returns>Number of occurrences of <paramref name="subStr" /> is <paramref name="source" /></returns>
         private static int CountOccurenceInSource(string source, string subString, StringComparison mode)
         {
             int occurencesCount = 0;

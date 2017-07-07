@@ -9,8 +9,8 @@ namespace EasySharp.NHelpers.CustomWrappers.Threading
     ///     <para>Contains the <see cref="Expression{Action}" /> to be executed in a separate thread.</para>
     ///     <para>Contains the execution order dependencies on other threads.</para>
     ///     <para>
-    ///         Contains the execution order dependencies of other threads that are wainting for the corrent thread
-    ///         complettion.
+    ///         Contains the execution order dependencies of other threads that are waiting for the current thread
+    ///         completion.
     ///     </para>
     /// </summary>
     public class ThreadWrapper
@@ -50,8 +50,8 @@ namespace EasySharp.NHelpers.CustomWrappers.Threading
         #endregion
 
         /// <summary>
-        ///     Injects <see cref="CountdownEvent" />s, thus imposing the execution order dependencies to threads that are wainting
-        ///     for the corrent thread complettion.
+        ///     Injects <see cref="CountdownEvent" />s, thus imposing the execution order dependencies to threads that are waiting
+        ///     for the current thread completion.
         /// </summary>
         /// <param name="countdownEvent"></param>
         public void InjectCountsownEvent(CountdownEvent countdownEvent)
@@ -63,8 +63,8 @@ namespace EasySharp.NHelpers.CustomWrappers.Threading
         ///     <para>Builds <see cref="Expression{Action}" /> and runs the <see cref="Action" /> in a separate thread.</para>
         /// </summary>
         /// <remarks>
-        ///     After the <see cref="Action" /> is completed, this method signalizes other threads that are wainting
-        ///     for the corrent thread complettion.
+        ///     After the <see cref="Action" /> is completed, this method signalizes other threads that are waiting
+        ///     for the current thread completion.
         /// </remarks>
         public void Run()
         {

@@ -125,9 +125,9 @@
                             resultSelector: accumulator => accumulator.Substring(0, accumulator.Length - 2));
 
                     string exceptionMessage =
-                        $"The integrity of Thread Wrappers Identifiers Disctinct Sequence is broken. " +
+                        $"The integrity of Thread Wrappers Identifiers Distinct Sequence is broken. " +
                         Environment.NewLine +
-                        $"The dublicates are: {commaSeparatedDublicateIdentifiers}";
+                        $"The duplicates are: {commaSeparatedDublicateIdentifiers}";
 
                     throw new Exception(exceptionMessage);
                 }

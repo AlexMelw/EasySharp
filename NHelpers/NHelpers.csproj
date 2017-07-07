@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="CustomExtensionMethods\ArrayHelper.cs" />
     <Compile Include="CustomExtensionMethods\ExceptionHelper.cs" />
+    <Compile Include="CustomExtensionMethods\TaskHelper.cs" />
     <Compile Include="CustomExtensionMethods\TwodimensionalArrayHelper.cs" />
     <Compile Include="CustomExtensionMethods\DictionaryHelper.cs" />
     <Compile Include="CustomExtensionMethods\IEnumerableHelper.cs" />
