@@ -22,6 +22,7 @@
         ///         <c>ContinueOnCapturedContext()</c>. It does the same thing, but just differentiates it from
         ///         <c>ConfigureAwait(false)</c> in a more visual manner.
         ///     </para>
+        ///     <para>Some good points to remember:</para>
         ///     <list type="number">
         ///         <item>
         ///             The synchronization context's job is simply to coordinate communication with a resource (UI thread,
@@ -37,7 +38,7 @@
         ///         </item>
         ///     </list>
         /// </remarks>
-        /// <typeparam name="TResult"></typeparam>
+        /// <typeparam name="TResult">The type of the result produced by this <see cref="Task{TResult}" />.</typeparam>
         /// <param name="task"><see cref="Task{TResult}" /> to be awaited</param>
         /// <returns>
         ///     <see cref="ConfiguredTaskAwaitable{TResult}" /> that provides an awaitable object that enables configured
