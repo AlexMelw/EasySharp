@@ -26,7 +26,7 @@
         /// <typeparam name="T">Type of elements to be swapped</typeparam>
         /// <param name="lhs">Left-hand side value</param>
         /// <param name="rhs">Right-hand side value</param>
-        private static void Swap<T>(ref T lhs, ref T rhs)
+        public static void Swap<T>(ref T lhs, ref T rhs)
         {
             T aux = lhs;
             lhs = rhs;

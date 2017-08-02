@@ -76,6 +76,11 @@
         /// <returns>Comma separated string</returns>
         public static string CommaSeparatedString<TSource>(this IEnumerable<TSource> source)
         {
+            if (source == null || !source.Any())
+            {
+                return string.Empty;
+            }
+
             return source.Aggregate(
                 seed: string.Empty,
                 func: (accumulator, item) => $"{item}, {accumulator}",
@@ -106,6 +111,11 @@
         /// <returns>Comma separated string</returns>
         public static string CommaSeparatedStringWithEndingDot<TSource>(this IEnumerable<TSource> source)
         {
+            if (source == null || !source.Any())
+            {
+                return string.Empty;
+            }
+
             return source.Aggregate(
                 seed: string.Empty,
                 func: (accumulator, item) => $"{item}, {accumulator}",
