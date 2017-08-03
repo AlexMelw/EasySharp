@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using static System.Environment;
 
     public static class IEnumerableHelper
     {
@@ -14,7 +15,10 @@
         /// </param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
-        /// <returns>true if exists any element in the source sequence that passed the test in the specified predicate; otherwise, false.</returns>
+        /// <returns>
+        ///     true if exists any element in the source sequence that passed the test in the specified predicate; otherwise,
+        ///     false.
+        /// </returns>
         /// <exception cref="T:System.ArgumentNullException">
         ///     <paramref name="source" /> or <paramref name="predicate" /> is null.
         /// </exception>
@@ -67,14 +71,15 @@
         }
 
         /// <summary>
-        ///     Aggregates an <paramref name="source" /> of type <see cref="IEnumerable{TSource}" />
+        ///     Aggregates an <paramref name="source" /> of type <see cref="IEnumerable{TSource}" /> to a comma-separated
+        ///     <see cref="string" />.
         /// </summary>
         /// <param name="source">
         ///     <see cref="string" />s collection plainTextSource that will be aggregated into a single comma-separated
         ///     <see cref="string" />
         /// </param>
-        /// <returns>Comma separated string</returns>
-        public static string CommaSeparatedString<TSource>(this IEnumerable<TSource> source)
+        /// <returns>Comma-separated string</returns>
+        public static string ToCommaSeparatedString<TSource>(this IEnumerable<TSource> source)
         {
             if (source == null || !source.Any())
             {
@@ -83,33 +88,34 @@
 
             return source.Aggregate(
                 seed: string.Empty,
-                func: (accumulator, item) => $"{item}, {accumulator}",
-                resultSelector: accumulator => accumulator.Substring(0, accumulator.Length - 2));
+                func: (accumulator, item) => $"{accumulator}, {item}",
+                resultSelector: accumulator => accumulator.Substring(2, accumulator.Length - 2));
         }
 
         /// <summary>
-        ///     Aggregates the <paramref name="source" /> that is a collection of variable number of arguments or an array of
-        ///     arguments of <typeparamref name="TSource"/> type.
+        ///     Aggregates an <paramref name="source" /> of type <see cref="IEnumerable{TSource}" /> to a comma-separated
+        ///     <see cref="string" />.
         /// </summary>
         /// <param name="source">
         ///     <see cref="string" />s collection plainTextSource that will be aggregated into a single comma-separated
         ///     <see cref="string" />
         /// </param>
         /// <returns>Comma separated string</returns>
-        public static string CommaSeparatedString<TSource>(params TSource[] source)
+        public static string ToCommaSeparatedString<TSource>(params TSource[] source)
         {
-            return source.CommaSeparatedString();
+            return source.ToCommaSeparatedString();
         }
 
         /// <summary>
-        ///     Aggregates an <paramref name="source" /> of type <see cref="IEnumerable{TSource}" />
+        ///     Aggregates an <paramref name="source" /> of type <see cref="IEnumerable{TSource}" /> to a comma-separated
+        ///     <see cref="string" /> ending with a dot.
         /// </summary>
         /// <param name="source">
         ///     <see cref="string" />s collection plainTextSource that will be aggregated into a single comma-separated
         ///     <see cref="string" /> with a dot at the end.
         /// </param>
-        /// <returns>Comma separated string</returns>
-        public static string CommaSeparatedStringWithEndingDot<TSource>(this IEnumerable<TSource> source)
+        /// <returns>Comma-separated string</returns>
+        public static string ToCommaSeparatedStringWithEndingDot<TSource>(this IEnumerable<TSource> source)
         {
             if (source == null || !source.Any())
             {
@@ -118,22 +124,63 @@
 
             return source.Aggregate(
                 seed: string.Empty,
-                func: (accumulator, item) => $"{item}, {accumulator}",
-                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 2)}.");
+                func: (accumulator, item) => $"{accumulator}, {item}",
+                resultSelector: accumulator => $"{accumulator.Substring(2, accumulator.Length - 2)}.");
         }
 
         /// <summary>
-        ///     Aggregates the <paramref name="source" /> that is a collection of variable number of arguments or an array of
-        ///     arguments of <typeparamref name="TSource"/> type.
+        ///     Aggregates an <paramref name="source" /> of type <see cref="IEnumerable{TSource}" /> to a comma-separated
+        ///     <see cref="string" /> ending with a dot.
         /// </summary>
         /// <param name="source">
         ///     <see cref="string" />s collection plainTextSource that will be aggregated into a single comma-separated
         ///     <see cref="string" /> with a dot at the end.
         /// </param>
         /// <returns>Comma separated string</returns>
-        public static string CommaSeparatedStringWithEndingDot<TSource>(params TSource[] source)
+        public static string ToCommaSeparatedStringWithEndingDot<TSource>(params TSource[] source)
         {
-            return source.CommaSeparatedStringWithEndingDot();
+            return source.ToCommaSeparatedStringWithEndingDot();
+        }
+
+        /// <summary>
+        ///     Aggregates an <paramref name="source" /> of type <see cref="IEnumerable{TSource}" /> to an JS-like array
+        ///     representation.
+        /// </summary>
+        /// <param name="source">
+        ///     <see cref="string" />s collection plainTextSource that will be aggregated into a single comma-separated
+        ///     <see cref="string" /> with a dot at the end.
+        /// </param>
+        /// <returns><see cref="string" /> as an JS-like array representation.</returns>
+        public static string ToJsArrayRepresentation<TSource>(this IEnumerable<TSource> source)
+        {
+            if (source == null || !source.Any())
+            {
+                return "[..EMPTY..]";
+            }
+
+            string indentation = "    ";
+            string doubleIndentation = indentation + indentation;
+
+            return source.Aggregate(
+                seed: $"[",
+                func: (accumulator, item) => $@"{accumulator}{NewLine}{indentation}{{{NewLine}{doubleIndentation}{
+                        item.ToString().Replace(NewLine, $"{NewLine}{doubleIndentation}")
+                    }{NewLine}{indentation}}},",
+                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{NewLine}]");
+        }
+
+        /// <summary>
+        ///     Aggregates an <paramref name="source" /> of type <see cref="IEnumerable{TSource}" /> to an JS-like array
+        ///     representation.
+        /// </summary>
+        /// <param name="source">
+        ///     <see cref="string" />s collection plainTextSource that will be aggregated into a single comma-separated
+        ///     <see cref="string" /> with a dot at the end.
+        /// </param>
+        /// <returns><see cref="string" /> as an JS-like array representation.</returns>
+        public static string ToJsArrayRepresentation<TSource>(params TSource[] source)
+        {
+            return source.ToJsArrayRepresentation();
         }
     }
 }

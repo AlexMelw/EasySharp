@@ -171,5 +171,36 @@
         {
             return Encoding.UTF8.GetString(sourceBytes);
         }
+
+        /// <summary>
+        ///     Writes the text representation of the given value be calling the <see langword="ToString" /> method on that value,
+        ///     followed by a line terminator to the text string or stream.
+        /// </summary>
+        /// <param name="value">
+        ///     The value to write on console. If <paramref name="value" /> is <see langword="null" />, only the line
+        ///     terminator is written.
+        /// </param>
+        /// <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter" /> is closed. </exception>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+        public static void Print(this string value)
+        {
+            Console.Out.WriteLine(value);
+        }
+
+        /// <summary>
+        ///     Writes the text representation of the given value be calling the <see langword="ToString" /> method on that value,
+        ///     followed by a line terminator to the text string or stream.
+        /// </summary>
+        /// <param name="value">
+        ///     The value to write on console. If <paramref name="value" /> is <see langword="null" />, only the line
+        ///     terminator is written.
+        /// </param>
+        /// <param name="format">A composite format <see cref="string" />.</param>
+        /// <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter" /> is closed. </exception>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+        public static void Print(this string value, string format)
+        {
+            Console.Out.WriteLine(format, value);
+        }
     }
 }

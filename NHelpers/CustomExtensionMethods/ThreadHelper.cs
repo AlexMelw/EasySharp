@@ -102,7 +102,7 @@
                 {
                     string exceptionMessage = $"The integrity of Thread Wrappers Identifiers Sequence is broken. " +
                                               Environment.NewLine +
-                                              $"The missing Thread Wrappers Identifiers are: {missingIdentifiers.CommaSeparatedStringWithEndingDot()}";
+                                              $"The missing Thread Wrappers Identifiers are: {missingIdentifiers.ToCommaSeparatedStringWithEndingDot()}";
 
                     throw new Exception(exceptionMessage);
                 }
