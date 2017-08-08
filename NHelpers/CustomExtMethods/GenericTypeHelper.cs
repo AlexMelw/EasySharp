@@ -98,9 +98,21 @@
         /// </example>
         public static void Print<TValue>(this TValue value)
         {
+            Print(value, allowRecursivePrinting: false);
+        }
+
+        //public static void Print<TValue>(this TValue value, bool allowRecursivePrinting) { }
+
+        public static void Print<TValue>(this TValue value,
+            bool allowRecursivePrinting,
+            int recursiveMaxLevelDepth = int.MaxValue - 1)
+        {
             if (value is IEnumerable enumerable)
             {
-                PrintEnumerable(enumerable);
+                PrintEnumerable(
+                    enumerable,
+                    allowRecursivePrinting,
+                    recursiveMaxLevelDepth);
                 return;
             }
 
@@ -127,7 +139,10 @@
                 }
 
                 // Not Overridden
-                Console.Out.WriteLine(EasySharpReflector.Serialize(value));
+                Console.Out.WriteLine(EasySharpReflector.Serialize(
+                    value,
+                    allowRecursivePrinting,
+                    recursiveMaxLevelDepth));
                 return;
             }
 
@@ -135,7 +150,17 @@
             Console.Out.WriteLine(value);
         }
 
-        private static void PrintEnumerable(IEnumerable enumerable)
+        public static void PrintRecursively<TValue>(this TValue value,
+            int recursiveMaxLevelDepth = int.MaxValue - 1)
+        {
+            Print(value, /*Recursively*/ true, recursiveMaxLevelDepth);
+        }
+
+        private static void PrintEnumerable(
+            IEnumerable enumerable,
+            bool allowRecursiveSerialization,
+            int recursiveMaxLevelDepth = int.MaxValue - 1,
+            int currentRecursionLevel = 1)
         {
             IEnumerable<object> objectsCollection = enumerable.Cast<object>().ToList();
 
@@ -149,7 +174,7 @@
             IEnumerable<string> enumerationAsStrings = Enumerable.Empty<string>();
 
             // We deal with an unknown type of items within IEnumerable<T>
-            
+
             // Collection has non-primitive items
             if (!isPrimitive)
             {
@@ -179,7 +204,9 @@
                 }
 
                 // ToString() is not overridden
-                enumerationAsStrings = objectsCollection.Select(o => EasySharpReflector.Serialize(o));
+                enumerationAsStrings = objectsCollection.Select(o => EasySharpReflector.Serialize(o,
+                    allowRecursiveSerialization,
+                    recursiveMaxLevelDepth));
                 Console.Out.WriteLine(enumerationAsStrings.ToJsArrayRepresentation());
                 return;
             }

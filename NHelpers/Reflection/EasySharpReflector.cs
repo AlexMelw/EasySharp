@@ -10,67 +10,98 @@ namespace EasySharp.NHelpers.Reflection
 
     public static class EasySharpReflector
     {
-        public static string Serialize<TValue>(TValue objectGraph)
+        public static string Serialize<TValue>(
+            TValue objectGraph,
+            bool allowRecursiveSerialization = false,
+            int recursiveSerializationMaxLevelDepth = int.MaxValue - 1)
         {
-            return Serialize<TValue>(objectGraph, allowRecursiveSerialization: false,
-                recursiveSerializationMaxAllowedDepth: 0, currentRecursionLevel: 0);
+            string serializedObject = Serialize(objectGraph,
+                allowRecursiveSerialization
+                    ? recursiveSerializationMaxLevelDepth == 0
+                        ? int.MaxValue - 1
+                        : recursiveSerializationMaxLevelDepth
+                    : 1,
+                currentRecursionLevel: 1);
+            return serializedObject;
         }
 
         private static string Serialize<TValue>(
             TValue objectGraph,
-            bool allowRecursiveSerialization,
             int recursiveSerializationMaxAllowedDepth,
             int currentRecursionLevel)
         {
             if (objectGraph == null)
             {
-                return null;
+                return "null";
             }
-            // allow recursive serialization
+
             if (currentRecursionLevel > recursiveSerializationMaxAllowedDepth)
             {
-                return "{ CONTENT NOT ANALYSED }";
+                return "{ NOT EVALUATED }";
             }
 
-            IEnumerable<PropertyInfo> propertyInfos = objectGraph.GetType()
-                .GetProperties()
-                .Where(propInfo =>
+            PropertyInfo[] propertiesInfos = objectGraph.GetType().GetProperties();
+
+            if (!propertiesInfos.Any())
+            {
+                return "{ NOTHING TO BE SERIALIZED: No properties found }";
+            }
+
+            #region Comments
+
+            //IEnumerable<string> simplePropertyKeyValuePairCollection = propertiesInfos
+            //    .Where(p => IsSimpleType(p.PropertyType))
+            //    .Select(propInfo =>
+            //    {
+            //        string key = propInfo.Name;
+            //        string value = propInfo.GetValue(objectGraph) is string
+            //            ? $"\"{propInfo.GetValue(objectGraph).ToString()}\""
+            //            : propInfo.GetValue(objectGraph).ToString();
+
+            //        return $"{key}: {value}";
+            //    });
+
+            //if (currentRecursionLevel == recursiveSerializationMaxLevelDepth)
+            //{
+            //    IEnumerable<string> enumerable = simplePropertyKeyValuePairCollection.Concat(
+            //        propertiesInfos.Where(p => false == IsSimpleType(p.PropertyType))
+            //            .Select(p =>
+            //            {
+            //                string key = p.Name;
+            //                string value = "{ CONTENT NOT ANALYSED }";
+
+            //                return $"{key}: {value}";
+            //            }));
+
+            //    ProjectPropertiesSeparatingByCommaAndNewLine(enumerable,
+            //        new string(' ', 4 * (currentRecursionLevel - 1)));
+            //}
+
+            #endregion
+
+            IEnumerable<string> simplePropertiesKeyValuePairCollection = propertiesInfos
+                .Where(p => IsSimpleType(p.PropertyType))
+                .Select(propInfo =>
                 {
-                    Type propertyType = propInfo.PropertyType;
-                    return propertyType.IsPrimitive
-                           || propertyType == typeof(string)
-                           || propertyType == typeof(DateTime)
-                           || propertyType == typeof(TimeSpan)
-                           || propertyType == typeof(Enum);
+                    string key = propInfo.Name;
+                    string value = propInfo.GetValue(objectGraph) is string
+                        ? $"\"{propInfo.GetValue(objectGraph).ToString()}\""
+                        : propInfo.GetValue(objectGraph).ToString();
+
+                    return $"{key}: {value}";
                 });
 
-            if (!propertyInfos.Any())
-            {
-                return "[ NO PROPERTIES FOUND: NOTHING TO BE SERIALIZED ]";
-            }
-
-            IEnumerable<string> primitievePropertyKeyValuePairCollection =
-                propertyInfos.Select(
-                    propInfo =>
-                    {
-                        string key = propInfo.Name;
-                        string value = propInfo.GetValue(objectGraph) is string
-                            ? $"\"{propInfo.GetValue(objectGraph).ToString()}\""
-                            : propInfo.GetValue(objectGraph).ToString();
-
-                        return $"{key}: {value}";
-                    });
-
-            IEnumerable<string> nonPrimitievePropertyKeyValuePairCollection = objectGraph.GetType().GetProperties()
-                .Where(p => !p.PropertyType.IsPrimitive)
+            IEnumerable<string> complexPropertyKeyValuePairCollection = propertiesInfos
+                .Where(p => false == IsSimpleType(p.PropertyType))
                 .Select(propInfo =>
                 {
                     string key = propInfo.Name;
                     string value = propInfo.PropertyType.HasToStringOverridden()
-                        ? propInfo.ToString()
+                        ? propInfo.GetValue(objectGraph) is string
+                            ? $"\"{propInfo.GetValue(objectGraph).ToString()}\""
+                            : propInfo.GetValue(objectGraph).ToString()
                         : EasySharpReflector.Serialize(
                             propInfo.GetValue(objectGraph),
-                            allowRecursiveSerialization,
                             recursiveSerializationMaxAllowedDepth,
                             currentRecursionLevel + 1);
 
@@ -78,18 +109,23 @@ namespace EasySharp.NHelpers.Reflection
                 });
 
             IEnumerable<string> allPropertiesGraph =
-                nonPrimitievePropertyKeyValuePairCollection.Concat(primitievePropertyKeyValuePairCollection);
+                simplePropertiesKeyValuePairCollection.Concat(complexPropertyKeyValuePairCollection);
 
-            string projection = ProjectPropertiesSeparatingByCommaAndNewLine(allPropertiesGraph, new string(' ', 0));
+            string projection = currentRecursionLevel == 1
+                ? ProjectPropertiesSeparatingByCommaAndNewLine(allPropertiesGraph,
+                    new string(' ', 4 * (currentRecursionLevel - 1)))
+                : $"{{{(ToJsObjectRepsrezentation(allPropertiesGraph, new string(' ', 4 * (currentRecursionLevel - 1))))}";
 
-            string resultString = $"{projection}";
+            return projection;
+        }
 
-            if (!allowRecursiveSerialization)
-            {
-                return resultString;
-            }
-
-            return resultString;
+        private static bool IsSimpleType(Type type)
+        {
+            return type.IsPrimitive
+                   || type == typeof(string)
+                   || type == typeof(DateTime)
+                   || type == typeof(TimeSpan)
+                   || type == typeof(Enum);
         }
 
         private static bool HasToStringOverridden(this Type type)
@@ -113,7 +149,7 @@ namespace EasySharp.NHelpers.Reflection
             return enumerationAsStrings.Aggregate(
                 seed: $"",
                 func: (accumulator, item) => $@"{accumulator}{NewLine}{indentation}{item},",
-                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{NewLine}");
+                resultSelector: accumulator => $"{accumulator.Substring(2, accumulator.Length - 3)}");
         }
 
         private static string ToJsObjectRepsrezentation(IEnumerable<string> enumerationAsStrings,
@@ -121,10 +157,13 @@ namespace EasySharp.NHelpers.Reflection
         {
             string NewLine = Environment.NewLine;
 
-            return enumerationAsStrings.Aggregate(
-                seed: $"{{",
+            string result = enumerationAsStrings.Aggregate(
+                seed: $"",
                 func: (accumulator, item) => $@"{accumulator}{NewLine}{indentation}{item},",
-                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{NewLine}}}");
+                resultSelector: accumulator =>
+                    $"{accumulator.Substring(0, accumulator.Length - 1)}{NewLine}{indentation.Substring(0, indentation.Length - 4)}}}");
+
+            return result;
         }
     }
 }
