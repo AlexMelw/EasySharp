@@ -44,6 +44,7 @@
     <Compile Include="CustomExtensionMethods\ArrayHelper.cs" />
     <Compile Include="CustomExtensionMethods\ExceptionHelper.cs" />
     <Compile Include="CustomExtensionMethods\GenericTypeHelper.cs" />
+    <Compile Include="CustomExtensionMethods\Reflection\MethodInfoHelper.cs" />
     <Compile Include="CustomExtensionMethods\TaskHelper.cs" />
     <Compile Include="CustomExtensionMethods\TwodimensionalArrayHelper.cs" />
     <Compile Include="CustomExtensionMethods\DictionaryHelper.cs" />
@@ -63,5 +64,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
