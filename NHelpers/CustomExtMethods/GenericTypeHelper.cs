@@ -108,14 +108,18 @@
 
             Type valueType = value.GetType();
 
-            bool isOverridden = valueType
-                .GetMethod(nameof(ToString))
-                .IsOverridden();
-
             bool isPrimitive = valueType.IsPrimitive;
 
             if (!isPrimitive)
             {
+                bool isOverridden = valueType.GetMethod(
+                    name: nameof(ToString),
+                    bindingAttr: BindingFlags.Instance | BindingFlags.Public,
+                    binder: null,
+                    types: Type.EmptyTypes,
+                    modifiers: null
+                ).IsOverridden();
+
                 if (isOverridden)
                 {
                     Console.Out.WriteLine(value);
@@ -145,8 +149,20 @@
             IEnumerable<string> enumerationAsStrings = Enumerable.Empty<string>();
 
             // We deal with an unknown type of items within IEnumerable<T>
+            
+            // Collection has non-primitive items
             if (!isPrimitive)
             {
+                // string is a non-primitive type
+                if (itemType == typeof(string)
+                    || itemType == typeof(DateTime)
+                    || itemType == typeof(TimeSpan)
+                    || itemType == typeof(Enum))
+                {
+                    PrintSimpleTypesCollection(objectsCollection, new string(' ', 4));
+                    return;
+                }
+
                 bool isOverridden = itemType.GetMethod(
                     name: nameof(ToString),
                     bindingAttr: BindingFlags.Instance | BindingFlags.Public,
@@ -168,33 +184,28 @@
                 return;
             }
 
-            // Collection has non-primitive items
-            enumerationAsStrings = objectsCollection.Select(o => o.ToString());
-
-            // string is a primitive type
-            if (itemType == typeof(string))
-            {
-                PrintStringLiteralsCollection(enumerationAsStrings);
-                return;
-            }
-
             // Other primitive types
+            enumerationAsStrings = objectsCollection.Select(o => o.ToString());
             PrintPrimitiveItemsCollection(enumerationAsStrings);
         }
 
-        private static void PrintStringLiteralsCollection(IEnumerable<string> enumerationAsStrings)
+        private static void PrintSimpleTypesCollection(IEnumerable<object> enumerationAsStrings, string indentation)
         {
-            string indentation = "    ";
-            string NewLine = Environment.NewLine;
-
-            string resultString = enumerationAsStrings.Aggregate(
-                seed: $"[",
-                func: (accumulator, item) => $@"{accumulator}{NewLine}{indentation}""{item}"",",
-                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{NewLine}]");
+            string resultString = ProjectStringSimpleTypesByCommaAndNewLine(enumerationAsStrings, indentation);
 
             Console.Out.WriteLine(resultString);
+        }
 
-            return;
+        private static string ProjectStringSimpleTypesByCommaAndNewLine(IEnumerable<object> enumerationAsStrings,
+            string indentation)
+        {
+            string newLine = Environment.NewLine;
+            string wrapper = enumerationAsStrings.FirstOrDefault().GetType() == typeof(string) ? "\"" : string.Empty;
+
+            return enumerationAsStrings.Aggregate(
+                seed: $"[",
+                func: (accumulator, item) => $@"{accumulator}{newLine}{indentation}{wrapper}{item}{wrapper},",
+                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{newLine}]");
         }
 
         private static void PrintPrimitiveItemsCollection(IEnumerable<string> enumerationAsStrings)

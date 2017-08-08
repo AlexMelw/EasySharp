@@ -13,7 +13,6 @@
         /// </remarks>
         public static bool IsOverridden(this MethodInfo methodInfo)
         {
-            bool methodInfoIsVirtual = methodInfo.IsVirtual;
             return methodInfo.DeclaringType == methodInfo.ReflectedType
                    && !methodInfo.IsAbstract;
         }
