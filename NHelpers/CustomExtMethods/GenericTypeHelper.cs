@@ -1,9 +1,12 @@
-﻿namespace EasySharp.NHelpers.CustomExtensionMethods
+﻿namespace EasySharp.NHelpers.CustomExtMethods
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
+    using Reflection;
+    using Reflection.CustomExtMethods;
 
     public static class GenericTypeHelper
     {
@@ -36,7 +39,8 @@
         ///     <see langword="true" /> if the source sequence contains an element that has the specified value
         ///     <paramref name="key" />; otherwise, <see langword="false" />.
         /// </returns>
-        public static bool In<TSource>(this TSource key, IEnumerable<TSource> source, IEqualityComparer<TSource> comparer)
+        public static bool In<TSource>(this TSource key, IEnumerable<TSource> source,
+            IEqualityComparer<TSource> comparer)
         {
             return source.Contains(key, comparer);
         }
@@ -96,45 +100,106 @@
         {
             if (value is IEnumerable enumerable)
             {
-                IEnumerable<object> objectsCollection = enumerable.Cast<object>();
-
-                if (!objectsCollection.Any())
-                    return;
-
-                object firstItem = objectsCollection.First();
-                Type itemType = firstItem.GetType();
-                bool isPrimitive = itemType.IsPrimitive;
-
-                IEnumerable<string> enumerationAsStrings = objectsCollection.Select(o => o.ToString());
-
-                if (isPrimitive)
-                {
-                    Console.Out.WriteLine($"[ {enumerationAsStrings.ToCommaSeparatedString()} ]");
-                    return;
-                }
-                if (itemType == typeof(string))
-                {
-                    string indentation = "    ";
-                    string NewLine = Environment.NewLine;
-
-                    string resultString = enumerationAsStrings.Aggregate(
-                        seed: $"[",
-                        func: (accumulator, item) => $@"{accumulator}{NewLine}{indentation}""{item}"",",
-                        resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{NewLine}]");
-
-                    Console.Out.WriteLine(resultString);
-
-                    return;
-                }
-                // ELSE
-                // We deal with an unknown type of items within IEnumerable<T>
-                Console.Out.WriteLine(enumerationAsStrings.ToJsArrayRepresentation());
+                PrintEnumerable(enumerable);
+                return;
             }
-            else
+
+            // Value is not a collection
+
+            Type valueType = value.GetType();
+
+            bool isOverridden = valueType
+                .GetMethod(nameof(ToString))
+                .IsOverridden();
+
+            bool isPrimitive = valueType.IsPrimitive;
+
+            if (!isPrimitive)
             {
-                // Single value (not a collection)
-                Console.Out.WriteLine(value);
+                if (isOverridden)
+                {
+                    Console.Out.WriteLine(value);
+                    return;
+                }
+
+                // Not Overridden
+                Console.Out.WriteLine(EasySharpReflector.Serialize(value));
+                return;
             }
+
+            // Primitive Type
+            Console.Out.WriteLine(value);
+        }
+
+        private static void PrintEnumerable(IEnumerable enumerable)
+        {
+            IEnumerable<object> objectsCollection = enumerable.Cast<object>().ToList();
+
+            if (!objectsCollection.Any())
+                return;
+
+            object firstItem = objectsCollection.First();
+            Type itemType = firstItem.GetType();
+            bool isPrimitive = itemType.IsPrimitive;
+
+            IEnumerable<string> enumerationAsStrings = Enumerable.Empty<string>();
+
+            // We deal with an unknown type of items within IEnumerable<T>
+            if (!isPrimitive)
+            {
+                bool isOverridden = itemType.GetMethod(
+                    name: nameof(ToString),
+                    bindingAttr: BindingFlags.Instance | BindingFlags.Public,
+                    binder: null,
+                    types: Type.EmptyTypes,
+                    modifiers: null
+                ).IsOverridden();
+
+                if (isOverridden)
+                {
+                    enumerationAsStrings = objectsCollection.Select(o => o.ToString());
+                    Console.Out.WriteLine(enumerationAsStrings.ToJsArrayRepresentation());
+                    return;
+                }
+
+                // ToString() is not overridden
+                enumerationAsStrings = objectsCollection.Select(o => EasySharpReflector.Serialize(o));
+                Console.Out.WriteLine(enumerationAsStrings.ToJsArrayRepresentation());
+                return;
+            }
+
+            // Collection has non-primitive items
+            enumerationAsStrings = objectsCollection.Select(o => o.ToString());
+
+            // string is a primitive type
+            if (itemType == typeof(string))
+            {
+                PrintStringLiteralsCollection(enumerationAsStrings);
+                return;
+            }
+
+            // Other primitive types
+            PrintPrimitiveItemsCollection(enumerationAsStrings);
+        }
+
+        private static void PrintStringLiteralsCollection(IEnumerable<string> enumerationAsStrings)
+        {
+            string indentation = "    ";
+            string NewLine = Environment.NewLine;
+
+            string resultString = enumerationAsStrings.Aggregate(
+                seed: $"[",
+                func: (accumulator, item) => $@"{accumulator}{NewLine}{indentation}""{item}"",",
+                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{NewLine}]");
+
+            Console.Out.WriteLine(resultString);
+
+            return;
+        }
+
+        private static void PrintPrimitiveItemsCollection(IEnumerable<string> enumerationAsStrings)
+        {
+            Console.Out.WriteLine($"[ {enumerationAsStrings.ToCommaSeparatedString()} ]");
         }
     }
 }

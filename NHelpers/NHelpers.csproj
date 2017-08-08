@@ -41,24 +41,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomExtensionMethods\ArrayHelper.cs" />
-    <Compile Include="CustomExtensionMethods\ExceptionHelper.cs" />
-    <Compile Include="CustomExtensionMethods\GenericTypeHelper.cs" />
-    <Compile Include="CustomExtensionMethods\Reflection\MethodInfoHelper.cs" />
-    <Compile Include="CustomExtensionMethods\TaskHelper.cs" />
-    <Compile Include="CustomExtensionMethods\TwodimensionalArrayHelper.cs" />
-    <Compile Include="CustomExtensionMethods\DictionaryHelper.cs" />
-    <Compile Include="CustomExtensionMethods\IEnumerableHelper.cs" />
-    <Compile Include="CustomExtensionMethods\ICollectionHelper.cs" />
-    <Compile Include="CustomExtensionMethods\LinkedListHelper.cs" />
-    <Compile Include="CustomExtensionMethods\ListHelper.cs" />
-    <Compile Include="CustomExtensionMethods\LookupHelper.cs" />
-    <Compile Include="CustomExtensionMethods\ObjectHelper.cs" />
+    <Compile Include="CustomExtMethods\ArrayHelper.cs" />
+    <Compile Include="Reflection\EasySharpReflector.cs" />
+    <Compile Include="CustomExtMethods\ExceptionHelper.cs" />
+    <Compile Include="CustomExtMethods\GenericTypeHelper.cs" />
+    <Compile Include="Reflection\CustomExtMethods\MethodInfoHelper.cs" />
+    <Compile Include="CustomExtMethods\TaskHelper.cs" />
+    <Compile Include="CustomExtMethods\TwodimensionalArrayHelper.cs" />
+    <Compile Include="CustomExtMethods\DictionaryHelper.cs" />
+    <Compile Include="CustomExtMethods\IEnumerableHelper.cs" />
+    <Compile Include="CustomExtMethods\ICollectionHelper.cs" />
+    <Compile Include="CustomExtMethods\LinkedListHelper.cs" />
+    <Compile Include="CustomExtMethods\ListHelper.cs" />
+    <Compile Include="CustomExtMethods\LookupHelper.cs" />
+    <Compile Include="CustomExtMethods\ObjectHelper.cs" />
     <Compile Include="CustomWrappers\Networking\TcpListenerEx.cs" />
     <Compile Include="CustomWrappers\Threading\ThreadWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CustomExtensionMethods\StringHelper.cs" />
-    <Compile Include="CustomExtensionMethods\ThreadHelper.cs" />
+    <Compile Include="CustomExtMethods\StringHelper.cs" />
+    <Compile Include="CustomExtMethods\ThreadHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

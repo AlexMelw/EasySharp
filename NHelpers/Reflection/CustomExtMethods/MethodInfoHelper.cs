@@ -1,4 +1,4 @@
-﻿namespace EasySharp.NHelpers.CustomExtensionMethods.Reflection
+﻿namespace EasySharp.NHelpers.Reflection.CustomExtMethods
 {
     using System.Reflection;
 

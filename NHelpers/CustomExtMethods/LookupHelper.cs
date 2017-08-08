@@ -1,4 +1,4 @@
-﻿namespace EasySharp.NHelpers.CustomExtensionMethods
+﻿namespace EasySharp.NHelpers.CustomExtMethods
 {
     using System.Collections.Generic;
     using System.Linq;

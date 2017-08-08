@@ -1,10 +1,9 @@
-﻿namespace EasySharp.NHelpers.CustomExtensionMethods
+﻿namespace EasySharp.NHelpers.CustomExtMethods
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using static System.Environment;
 
     public static class IEnumerableHelper
     {
@@ -163,10 +162,10 @@
 
             return source.Aggregate(
                 seed: $"[",
-                func: (accumulator, item) => $@"{accumulator}{NewLine}{indentation}{{{NewLine}{doubleIndentation}{
-                        item.ToString().Replace(NewLine, $"{NewLine}{doubleIndentation}")
-                    }{NewLine}{indentation}}},",
-                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{NewLine}]");
+                func: (accumulator, item) => $@"{accumulator}{Environment.NewLine}{indentation}{{{Environment.NewLine}{doubleIndentation}{
+                        item.ToString().Replace(Environment.NewLine, $"{Environment.NewLine}{doubleIndentation}")
+                    }{Environment.NewLine}{indentation}}},",
+                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{Environment.NewLine}]");
         }
 
         /// <summary>
