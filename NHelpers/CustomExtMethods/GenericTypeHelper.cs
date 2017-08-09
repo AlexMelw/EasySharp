@@ -68,6 +68,8 @@
         ///     The object to be written on console. If <paramref name="value" /> is <see langword="null" />, only
         ///     the line terminator is written.
         /// </param>
+        /// <param name="allowRecursivePrinting"></param>
+        /// <param name="recursiveMaxLevelDepth"></param>
         /// <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter" /> is closed. </exception>
         /// <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
         /// <typeparam name="TValue">The type of <paramref name="value" /> parameter.</typeparam>
@@ -96,15 +98,8 @@
         ///         }.Print();
         /// </code>
         /// </example>
-        public static void Print<TValue>(this TValue value)
-        {
-            Print(value, allowRecursivePrinting: false);
-        }
-
-        //public static void Print<TValue>(this TValue value, bool allowRecursivePrinting) { }
-
         public static void Print<TValue>(this TValue value,
-            bool allowRecursivePrinting,
+            bool allowRecursivePrinting = false,
             int recursiveMaxLevelDepth = int.MaxValue - 1)
         {
             if (value is IEnumerable enumerable)

@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomExtMethods\ArrayHelper.cs" />
+    <Compile Include="Reflection\CustomExtMethods\AttributeHelper.cs" />
     <Compile Include="Reflection\EasySharpReflector.cs" />
     <Compile Include="CustomExtMethods\ExceptionHelper.cs" />
     <Compile Include="CustomExtMethods\GenericTypeHelper.cs" />
