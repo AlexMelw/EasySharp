@@ -1,4 +1,4 @@
-﻿namespace EasySharp.NHelpers.CustomExtMethods
+﻿namespace EasySharp.NHelpers.CustomExMethods
 {
     public static class ObjectHelper
     {

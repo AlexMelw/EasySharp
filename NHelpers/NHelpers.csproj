@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,26 +42,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomExtMethods\ArrayHelper.cs" />
-    <Compile Include="Reflection\CustomExtMethods\AttributeHelper.cs" />
+    <Compile Include="CustomExMethods\ArrayHelper.cs" />
+    <Compile Include="Reflection\CustomExMethods\AttributeHelper.cs" />
     <Compile Include="Reflection\EasySharpReflector.cs" />
-    <Compile Include="CustomExtMethods\ExceptionHelper.cs" />
-    <Compile Include="CustomExtMethods\GenericTypeHelper.cs" />
-    <Compile Include="Reflection\CustomExtMethods\MethodInfoHelper.cs" />
-    <Compile Include="CustomExtMethods\TaskHelper.cs" />
-    <Compile Include="CustomExtMethods\TwodimensionalArrayHelper.cs" />
-    <Compile Include="CustomExtMethods\DictionaryHelper.cs" />
-    <Compile Include="CustomExtMethods\IEnumerableHelper.cs" />
-    <Compile Include="CustomExtMethods\ICollectionHelper.cs" />
-    <Compile Include="CustomExtMethods\LinkedListHelper.cs" />
-    <Compile Include="CustomExtMethods\ListHelper.cs" />
-    <Compile Include="CustomExtMethods\LookupHelper.cs" />
-    <Compile Include="CustomExtMethods\ObjectHelper.cs" />
+    <Compile Include="CustomExMethods\ExceptionHelper.cs" />
+    <Compile Include="CustomExMethods\GenericTypeHelper.cs" />
+    <Compile Include="Reflection\CustomExMethods\MethodInfoHelper.cs" />
+    <Compile Include="CustomExMethods\TaskHelper.cs" />
+    <Compile Include="CustomExMethods\TwodimensionalArrayHelper.cs" />
+    <Compile Include="CustomExMethods\DictionaryHelper.cs" />
+    <Compile Include="CustomExMethods\IEnumerableHelper.cs" />
+    <Compile Include="CustomExMethods\ICollectionHelper.cs" />
+    <Compile Include="CustomExMethods\LinkedListHelper.cs" />
+    <Compile Include="CustomExMethods\ListHelper.cs" />
+    <Compile Include="CustomExMethods\LookupHelper.cs" />
+    <Compile Include="CustomExMethods\ObjectHelper.cs" />
     <Compile Include="CustomWrappers\Networking\TcpListenerEx.cs" />
     <Compile Include="CustomWrappers\Threading\ThreadWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CustomExtMethods\StringHelper.cs" />
-    <Compile Include="CustomExtMethods\ThreadHelper.cs" />
+    <Compile Include="CustomExMethods\StringHelper.cs" />
+    <Compile Include="CustomExMethods\ThreadHelper.cs" />
+    <Compile Include="Utils\Cryptography\RngUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

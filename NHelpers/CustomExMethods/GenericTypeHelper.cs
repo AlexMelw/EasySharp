@@ -1,4 +1,4 @@
-﻿namespace EasySharp.NHelpers.CustomExtMethods
+﻿namespace EasySharp.NHelpers.CustomExMethods
 {
     using System;
     using System.Collections;
@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Reflection;
     using Reflection;
-    using Reflection.CustomExtMethods;
+    using Reflection.CustomExMethods;
 
     public static class GenericTypeHelper
     {
@@ -218,7 +218,7 @@
             Console.Out.WriteLine(resultString);
         }
 
-        private static string ProjectStringSimpleTypesByCommaAndNewLine(IEnumerable<object> enumerationAsStrings,
+        public static string ProjectStringSimpleTypesByCommaAndNewLine(IEnumerable<object> enumerationAsStrings,
             string indentation)
         {
             string newLine = Environment.NewLine;
@@ -233,6 +233,26 @@
         private static void PrintPrimitiveItemsCollection(IEnumerable<string> enumerationAsStrings)
         {
             Console.Out.WriteLine($"[ {enumerationAsStrings.ToCommaSeparatedString()} ]");
+        }
+
+
+        public static Type GetItemsType(this Type source)
+        {
+            return source.GetGenericArguments() // new[] { typeof(T) }
+                .Single(); // typeof(T)
+        }
+
+        /// <summary>
+        ///     Determines if collection is of type <see cref="IEnumerable{T}" />
+        /// </summary>
+        /// <param name="sourceType"><see cref="Type" /> to be inspected.</param>
+        /// <returns><see cref="bool" /> if collection is such, otherwise <see langword="null" /></returns>
+        public static bool IsImplementsIEnumerable(this Type sourceType)
+        {
+            //return typeof(IEnumerable).IsAssignableFrom(sourceType);
+            return sourceType.GetInterfaces()
+                .Any(type => type.IsGenericType
+                             && type.GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }
     }
 }

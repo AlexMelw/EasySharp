@@ -2,11 +2,12 @@ using System;
 
 namespace EasySharp.NHelpers.Reflection
 {
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using CustomExtMethods;
-    using NHelpers.CustomExtMethods;
+    using CustomExMethods;
+    using NHelpers.CustomExMethods;
 
     public static class EasySharpReflector
     {
@@ -79,6 +80,44 @@ namespace EasySharp.NHelpers.Reflection
 
             #endregion
 
+            var ienumerablePropertiesCollection = propertiesInfos
+                .Where(p =>
+                {
+                    string pName = p.Name;
+                    bool isIEnumerable = p.PropertyType.IsImplementsIEnumerable();
+                    return isIEnumerable;
+                })
+                .Select(propInfo =>
+                {
+                    string key = propInfo.Name;
+
+                    IEnumerable<object> objectsCollection =
+                        ((IEnumerable)propInfo.GetValue(objectGraph)).Cast<object>();
+                    Type itemsType = objectsCollection.GetType().GetItemsType();
+                    bool valueItemIsString = itemsType == typeof(string);
+                    bool valueItemIsSimpleType = IsSimpleType(itemsType);
+
+                    string value = string.Empty;
+
+                    if (valueItemIsString)
+                    {
+                        value = GenericTypeHelper.ProjectStringSimpleTypesByCommaAndNewLine(objectsCollection,
+                            new string(' ', 4 * (currentRecursionLevel - 1)));
+                    }
+                    else if (valueItemIsSimpleType)
+                    {
+                        value = GenericTypeHelper.ProjectStringSimpleTypesByCommaAndNewLine(
+                            enumerationAsStrings: objectsCollection.Select(o => o.ToString()),
+                            indentation: new string(' ', 4 * (currentRecursionLevel - 1)));
+                    }
+                    else
+                    {
+                        value = "{ Complex items of IEnumerable<T> are not evaluated }";
+                    }
+                    return $"{key}: {value}";
+                });
+
+
             IEnumerable<string> simplePropertiesKeyValuePairCollection = propertiesInfos
                 .Where(p => IsSimpleType(p.PropertyType))
                 .Select(propInfo =>
@@ -92,24 +131,28 @@ namespace EasySharp.NHelpers.Reflection
                 });
 
             IEnumerable<string> complexPropertyKeyValuePairCollection = propertiesInfos
-                .Where(p => false == IsSimpleType(p.PropertyType))
+                .Where(p => false == IsSimpleType(p.PropertyType) && p.PropertyType != typeof(IEnumerable))
                 .Select(propInfo =>
                 {
                     string key = propInfo.Name;
+
+                    object propValue = propInfo.GetValue(objectGraph);
                     string value = propInfo.PropertyType.HasToStringOverridden()
-                        ? propInfo.GetValue(objectGraph) is string
-                            ? $"\"{propInfo.GetValue(objectGraph).ToString()}\""
-                            : propInfo.GetValue(objectGraph).ToString()
-                        : EasySharpReflector.Serialize(
-                            propInfo.GetValue(objectGraph),
+                        ? propValue is string
+                            ? $"\"{propValue.ToString()}\""
+                            : propValue.ToString()
+                        : Serialize(
+                            propValue,
                             recursiveSerializationMaxAllowedDepth,
                             currentRecursionLevel + 1);
 
                     return $"{key}: {value}";
                 });
+            ;
 
-            IEnumerable<string> allPropertiesGraph =
-                simplePropertiesKeyValuePairCollection.Concat(complexPropertyKeyValuePairCollection);
+            IEnumerable<string> allPropertiesGraph = simplePropertiesKeyValuePairCollection
+                .Concat(complexPropertyKeyValuePairCollection)
+                .Concat(ienumerablePropertiesCollection);
 
             string projection = currentRecursionLevel == 1
                 ? ProjectPropertiesSeparatingByCommaAndNewLine(allPropertiesGraph,

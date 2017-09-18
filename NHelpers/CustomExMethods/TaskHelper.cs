@@ -1,4 +1,4 @@
-﻿namespace EasySharp.NHelpers.CustomExtMethods
+﻿namespace EasySharp.NHelpers.CustomExMethods
 {
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;

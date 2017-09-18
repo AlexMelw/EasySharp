@@ -1,4 +1,4 @@
-﻿namespace EasySharp.NHelpers.CustomExtMethods
+﻿namespace EasySharp.NHelpers.CustomExMethods
 {
     using System;
 
@@ -25,12 +25,25 @@
         /// <returns><see cref="Array" /> of type <c>T</c></returns>
         public static T[] SetToDefaults<T>(this T[] sourceArray)
         {
-            T[] newArray = { };
+            T[] newArray = new T[sourceArray.Length];
 
             for (int i = 0; i < sourceArray.Length; i++)
                 newArray[i] = default(T);
 
             return newArray;
+        }
+
+        /// <summary>
+        ///     Clones source array by creating a new array and copying all the elements from source array to destination array.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static T[] CloneArray<T>(this T[] source)
+        {
+            T[] destination = new T[source.Length];
+            Array.Copy(source, destination, source.Length);
+            return destination;
         }
     }
 }

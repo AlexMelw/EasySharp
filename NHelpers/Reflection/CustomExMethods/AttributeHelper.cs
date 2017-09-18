@@ -1,6 +1,5 @@
-﻿namespace EasySharp.NHelpers.Reflection.CustomExtMethods
+﻿namespace EasySharp.NHelpers.Reflection.CustomExMethods
 {
-    using System.Linq;
     using System.Reflection;
 
     public static class AttributeHelper
