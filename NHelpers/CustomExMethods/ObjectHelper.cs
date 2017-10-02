@@ -3,10 +3,11 @@
     public static class ObjectHelper
     {
         /// <summary>
-        /// Converts the variable of type <see cref="object"/> (which underlying type is anonymous) to the same anonymous type.
+        ///     Converts the variable of type <see cref="object" /> (which underlying type is anonymous) to the same anonymous
+        ///     type.
         /// </summary>
         /// <example>
-        /// <code>
+        ///     <code>
         /// static void Enter(object wrapper)
         /// {
         ///     var anonymousTypeHolder = wrapper.CastTo(new { x = 0, y = string.Empty });
@@ -21,7 +22,7 @@
         public static T CastTo<T>(this object value, T targetType) => (T) value;
 
         /// <summary>
-        /// SwapElementsAt two values
+        ///     SwapElementsAt two values
         /// </summary>
         /// <typeparam name="T">Type of elements to be swapped</typeparam>
         /// <param name="lhs">Left-hand side value</param>

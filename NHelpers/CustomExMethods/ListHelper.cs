@@ -41,8 +41,8 @@
         /// </summary>
         /// <typeparam name="T">Type of elements to be swapped</typeparam>
         /// <param name="source">A sequence of values</param>
-        /// <param name="firstPos">First position in <paramref name="source"/> at which is located an element to be swapped</param>
-        /// <param name="secondPos">Second position in <paramref name="source"/> at which is located an element to be swapped</param>
+        /// <param name="firstPos">First position in <paramref name="source" /> at which is located an element to be swapped</param>
+        /// <param name="secondPos">Second position in <paramref name="source" /> at which is located an element to be swapped</param>
         public static void SwapElementsAt<T>(this IList<T> source, int firstPos, int secondPos)
         {
             T aux = source[firstPos];

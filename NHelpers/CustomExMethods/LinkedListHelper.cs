@@ -45,7 +45,10 @@
         /// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector" />.</typeparam>
         /// <param name="source">A sequence of values to order.</param>
         /// <param name="keySelector">A function to extract a key from an element.</param>
-        /// <returns>An <see cref="LinkedList{T}"/> (where <c>T</c> is <typeparamref name="TSource"/>) whose elements are sorted in ascending order according to a key.</returns>
+        /// <returns>
+        ///     An <see cref="LinkedList{T}" /> (where <c>T</c> is <typeparamref name="TSource" />) whose elements are sorted
+        ///     in ascending order according to a key.
+        /// </returns>
         public static LinkedList<TSource> SortedAscending<TSource, TKey>(this LinkedList<TSource> source,
             Func<TSource, TKey> keySelector)
         {
@@ -62,7 +65,10 @@
         /// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector" />.</typeparam>
         /// <param name="source">A sequence of values to order.</param>
         /// <param name="keySelector">A function to extract a key from an element.</param>
-        /// <returns>An <see cref="LinkedList{T}"/> (where <c>T</c> is <typeparamref name="TSource"/>) whose elements are sorted in descending order according to a key.</returns>
+        /// <returns>
+        ///     An <see cref="LinkedList{T}" /> (where <c>T</c> is <typeparamref name="TSource" />) whose elements are sorted
+        ///     in descending order according to a key.
+        /// </returns>
         public static LinkedList<TSource> SortedDescending<TSource, TKey>(this LinkedList<TSource> source,
             Func<TSource, TKey> keySelector)
         {

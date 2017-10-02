@@ -1,9 +1,8 @@
 ﻿namespace EasySharp.NHelpers.Utils.Cryptography
 {
     using System;
-    using System.Numerics;
+    using System.Linq;
     using System.Security.Cryptography;
-    using System.Threading;
 
     public static class RNGUtil
     {
@@ -54,6 +53,23 @@
 
                 return randomNumbers;
             }
+        }
+
+
+        public static byte GenerateRandomByte()
+        {
+            byte[] generatedRandomNumber = GenerateRandomNumber(1);
+            byte generatedByte = generatedRandomNumber.Single();
+
+            return generatedByte;
+        }
+
+        public static int GenerateRandomInt()
+        {
+            byte[] generatedRandomNumber = GenerateRandomNumber(4);
+            int generatedInt = BitConverter.ToInt32(generatedRandomNumber, 0);
+
+            return generatedInt;
         }
     }
 }

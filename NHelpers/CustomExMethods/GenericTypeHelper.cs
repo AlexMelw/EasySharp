@@ -47,7 +47,8 @@
 
         /// <summary>
         ///     <para>
-        ///         Writes on console the parameter <paramref name="value" /> as a <see cref="string" />, followed by a line terminator to
+        ///         Writes on console the parameter <paramref name="value" /> as a <see cref="string" />, followed by a line
+        ///         terminator to
         ///         the text string or stream.
         ///     </para>
         ///     <para>
@@ -120,11 +121,11 @@
             if (!isPrimitive)
             {
                 bool isOverridden = valueType.GetMethod(
-                    name: nameof(ToString),
-                    bindingAttr: BindingFlags.Instance | BindingFlags.Public,
-                    binder: null,
-                    types: Type.EmptyTypes,
-                    modifiers: null
+                    nameof(ToString),
+                    BindingFlags.Instance | BindingFlags.Public,
+                    null,
+                    Type.EmptyTypes,
+                    null
                 ).IsOverridden();
 
                 if (isOverridden)
@@ -149,6 +150,38 @@
             int recursiveMaxLevelDepth = int.MaxValue - 1)
         {
             Print(value, /*Recursively*/ true, recursiveMaxLevelDepth);
+        }
+
+        public static string ProjectStringSimpleTypesByCommaAndNewLine(IEnumerable<object> enumerationAsStrings,
+            string indentation)
+        {
+            string newLine = Environment.NewLine;
+            string wrapper = enumerationAsStrings.FirstOrDefault().GetType() == typeof(string) ? "\"" : string.Empty;
+
+            return enumerationAsStrings.Aggregate(
+                $"[",
+                (accumulator, item) => $@"{accumulator}{newLine}{indentation}{wrapper}{item}{wrapper},",
+                accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{newLine}]");
+        }
+
+
+        public static Type GetItemsType(this Type source)
+        {
+            return source.GetGenericArguments() // new[] { typeof(T) }
+                .Single(); // typeof(T)
+        }
+
+        /// <summary>
+        ///     Determines if collection is of type <see cref="IEnumerable{T}" />
+        /// </summary>
+        /// <param name="sourceType"><see cref="Type" /> to be inspected.</param>
+        /// <returns><see cref="bool" /> if collection is such, otherwise <see langword="null" /></returns>
+        public static bool IsImplementsIEnumerable(this Type sourceType)
+        {
+            //return typeof(IEnumerable).IsAssignableFrom(sourceType);
+            return sourceType.GetInterfaces()
+                .Any(type => type.IsGenericType
+                             && type.GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }
 
         private static void PrintEnumerable(
@@ -184,11 +217,11 @@
                 }
 
                 bool isOverridden = itemType.GetMethod(
-                    name: nameof(ToString),
-                    bindingAttr: BindingFlags.Instance | BindingFlags.Public,
-                    binder: null,
-                    types: Type.EmptyTypes,
-                    modifiers: null
+                    nameof(ToString),
+                    BindingFlags.Instance | BindingFlags.Public,
+                    null,
+                    Type.EmptyTypes,
+                    null
                 ).IsOverridden();
 
                 if (isOverridden)
@@ -218,41 +251,9 @@
             Console.Out.WriteLine(resultString);
         }
 
-        public static string ProjectStringSimpleTypesByCommaAndNewLine(IEnumerable<object> enumerationAsStrings,
-            string indentation)
-        {
-            string newLine = Environment.NewLine;
-            string wrapper = enumerationAsStrings.FirstOrDefault().GetType() == typeof(string) ? "\"" : string.Empty;
-
-            return enumerationAsStrings.Aggregate(
-                seed: $"[",
-                func: (accumulator, item) => $@"{accumulator}{newLine}{indentation}{wrapper}{item}{wrapper},",
-                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{newLine}]");
-        }
-
         private static void PrintPrimitiveItemsCollection(IEnumerable<string> enumerationAsStrings)
         {
             Console.Out.WriteLine($"[ {enumerationAsStrings.ToCommaSeparatedString()} ]");
-        }
-
-
-        public static Type GetItemsType(this Type source)
-        {
-            return source.GetGenericArguments() // new[] { typeof(T) }
-                .Single(); // typeof(T)
-        }
-
-        /// <summary>
-        ///     Determines if collection is of type <see cref="IEnumerable{T}" />
-        /// </summary>
-        /// <param name="sourceType"><see cref="Type" /> to be inspected.</param>
-        /// <returns><see cref="bool" /> if collection is such, otherwise <see langword="null" /></returns>
-        public static bool IsImplementsIEnumerable(this Type sourceType)
-        {
-            //return typeof(IEnumerable).IsAssignableFrom(sourceType);
-            return sourceType.GetInterfaces()
-                .Any(type => type.IsGenericType
-                             && type.GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }
     }
 }

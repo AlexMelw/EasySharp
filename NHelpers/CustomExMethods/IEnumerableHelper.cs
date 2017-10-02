@@ -86,9 +86,9 @@
             }
 
             return source.Aggregate(
-                seed: string.Empty,
-                func: (accumulator, item) => $"{accumulator}, {item}",
-                resultSelector: accumulator => accumulator.Substring(2, accumulator.Length - 2));
+                string.Empty,
+                (accumulator, item) => $"{accumulator}, {item}",
+                accumulator => accumulator.Substring(2, accumulator.Length - 2));
         }
 
         /// <summary>
@@ -122,9 +122,9 @@
             }
 
             return source.Aggregate(
-                seed: string.Empty,
-                func: (accumulator, item) => $"{accumulator}, {item}",
-                resultSelector: accumulator => $"{accumulator.Substring(2, accumulator.Length - 2)}.");
+                string.Empty,
+                (accumulator, item) => $"{accumulator}, {item}",
+                accumulator => $"{accumulator.Substring(2, accumulator.Length - 2)}.");
         }
 
         /// <summary>
@@ -161,11 +161,12 @@
             string doubleIndentation = indentation + indentation;
 
             return source.Aggregate(
-                seed: $"[",
-                func: (accumulator, item) => $@"{accumulator}{Environment.NewLine}{indentation}{{{Environment.NewLine}{doubleIndentation}{
-                        item.ToString().Replace(Environment.NewLine, $"{Environment.NewLine}{doubleIndentation}")
-                    }{Environment.NewLine}{indentation}}},",
-                resultSelector: accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{Environment.NewLine}]");
+                $"[",
+                (accumulator, item) =>
+                    $@"{accumulator}{Environment.NewLine}{indentation}{{{Environment.NewLine}{doubleIndentation}{
+                            item.ToString().Replace(Environment.NewLine, $"{Environment.NewLine}{doubleIndentation}")
+                        }{Environment.NewLine}{indentation}}},",
+                accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{Environment.NewLine}]");
         }
 
         /// <summary>

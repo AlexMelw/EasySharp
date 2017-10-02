@@ -31,25 +31,24 @@
         ///     </para>
         /// </summary>
         /// <example>
-        ///            var builtThreadExecutionOrder = Thread.CurrentThread
-        ///                .InitThreadExecutionOrder()
-        ///                .StageThread(2, () =&gt; Console.WriteLine($"Thread_2 executed"), 0, 1)
-        ///                .StageThread(0, () =&gt; Console.WriteLine($"Thread_0 executed"))
-        ///                .StageThread(1, () =&gt; Console.WriteLine($"Thread_1 executed"), 0)
-        ///                .StageThread(3, () =&gt; Console.WriteLine($"Thread_3 executed"), 0)
-        ///                .Build();
-        /// 
-        ///            builtThreadExecutionOrder.RunStagedThreadsChain(); // Deferred run
+        ///     var builtThreadExecutionOrder = Thread.CurrentThread
+        ///     .InitThreadExecutionOrder()
+        ///     .StageThread(2, () =&gt; Console.WriteLine($"Thread_2 executed"), 0, 1)
+        ///     .StageThread(0, () =&gt; Console.WriteLine($"Thread_0 executed"))
+        ///     .StageThread(1, () =&gt; Console.WriteLine($"Thread_1 executed"), 0)
+        ///     .StageThread(3, () =&gt; Console.WriteLine($"Thread_3 executed"), 0)
+        ///     .Build();
+        ///     builtThreadExecutionOrder.RunStagedThreadsChain(); // Deferred run
         /// </example>
         /// <example>
-        ///             Thread.CurrentThread
-        ///                .InitThreadExecutionOrder()
-        ///                .StageThread(2, () =&gt; Console.WriteLine($"Thread_2 executed"), 0, 1)
-        ///                .StageThread(0, () =&gt; Console.WriteLine($"Thread_0 executed"))
-        ///                .StageThread(1, () =&gt; Console.WriteLine($"Thread_1 executed"), 0)
-        ///                .StageThread(3, () =&gt; Console.WriteLine($"Thread_3 executed"), 0)
-        ///                .Build()
-        ///                .RunStagedThreadsChain(); // Instant run
+        ///     Thread.CurrentThread
+        ///     .InitThreadExecutionOrder()
+        ///     .StageThread(2, () =&gt; Console.WriteLine($"Thread_2 executed"), 0, 1)
+        ///     .StageThread(0, () =&gt; Console.WriteLine($"Thread_0 executed"))
+        ///     .StageThread(1, () =&gt; Console.WriteLine($"Thread_1 executed"), 0)
+        ///     .StageThread(3, () =&gt; Console.WriteLine($"Thread_3 executed"), 0)
+        ///     .Build()
+        ///     .RunStagedThreadsChain(); // Instant run
         /// </example>
         private class ThreadExecutionStageBuilder :
             IThreadExecutionBuiltOrder, IThreadExecutionStageInitializer
@@ -119,10 +118,10 @@
 
                     string commaSeparatedDublicateIdentifiers = dublicates
                         .Aggregate(
-                            seed: string.Empty,
-                            func: (accumulator, idGroup) =>
+                            string.Empty,
+                            (accumulator, idGroup) =>
                                 $"{idGroup.Key} (occurrences: {idGroup.Count()}), {accumulator}",
-                            resultSelector: accumulator => accumulator.Substring(0, accumulator.Length - 2));
+                            accumulator => accumulator.Substring(0, accumulator.Length - 2));
 
                     string exceptionMessage =
                         $"The integrity of Thread Wrappers Identifiers Distinct Sequence is broken. " +
@@ -149,20 +148,6 @@
                 return this;
             }
 
-
-            private void StageThread(int manuallySetIdentifier, Expression<Action> thread, params int[] waitForThreads)
-            {
-                if (thread != null)
-                {
-                    _threadWrappersChain.Add(
-                        new ThreadWrapper(
-                            threadWrapperIdentifier: manuallySetIdentifier,
-                            dependenciesNumber: _threadWrappersChain.Count,
-                            threadActionExpression: thread,
-                            waitForThreads: waitForThreads ?? new int[0]));
-                }
-            }
-
             /// <summary>
             ///     <para>
             ///         Stages the <see cref="Expression{Action}" /> as a <see cref="ThreadWrapper" /> within the Thread Execution
@@ -180,19 +165,33 @@
                 params int[] waitForThreads)
             {
                 StageThread(
-                    manuallySetIdentifier: manuallySetIdentifier,
-                    thread: thread,
-                    waitForThreads: waitForThreads);
+                    manuallySetIdentifier,
+                    thread,
+                    waitForThreads);
 
                 return this;
             }
 
             /// <summary>
-            /// <para>Runs the Threads Execution Sequence if it was built successfully, otherwise throws an exception.</para>
+            ///     <para>Runs the Threads Execution Sequence if it was built successfully, otherwise throws an exception.</para>
             /// </summary>
             void IThreadExecutionBuiltOrder.RunStagedThreadsChain()
             {
                 RunStagedThreadsChain();
+            }
+
+
+            private void StageThread(int manuallySetIdentifier, Expression<Action> thread, params int[] waitForThreads)
+            {
+                if (thread != null)
+                {
+                    _threadWrappersChain.Add(
+                        new ThreadWrapper(
+                            manuallySetIdentifier,
+                            _threadWrappersChain.Count,
+                            thread,
+                            waitForThreads ?? new int[0]));
+                }
             }
 
             private void RunStagedThreadsChain()
@@ -226,9 +225,9 @@
                 params int[] waitForThreads)
             {
                 StageThread(
-                    manuallySetIdentifier: -1, // -1 stands for: NOT SET
-                    thread: thread,
-                    waitForThreads: waitForThreads);
+                    -1, // -1 stands for: NOT SET
+                    thread,
+                    waitForThreads);
 
                 return this;
             }

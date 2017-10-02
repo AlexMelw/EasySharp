@@ -7,16 +7,19 @@
     public static class ExceptionHelper
     {
         /// <summary>
-        /// Gets the entire stack trace consisting of exception's footprints (File, Method, LineNumber)
+        ///     Gets the entire stack trace consisting of exception's footprints (File, Method, LineNumber)
         /// </summary>
-        /// <param name="exception">Source <see cref="Exception"/></param>
-        /// <returns><see cref="string"/> that represents the entire stack trace consisting of exception's footprints (File, Method, LineNumber)</returns>
+        /// <param name="exception">Source <see cref="Exception" /></param>
+        /// <returns>
+        ///     <see cref="string" /> that represents the entire stack trace consisting of exception's footprints (File,
+        ///     Method, LineNumber)
+        /// </returns>
         public static string GetExceptionFootprints(this Exception exception)
         {
-            StackTrace stackTrace = new StackTrace(e: exception, fNeedFileInfo: true);
+            StackTrace stackTrace = new StackTrace(exception, true);
             StackFrame[] frames = stackTrace.GetFrames();
 
-            if (object.ReferenceEquals(frames, null))
+            if (ReferenceEquals(frames, null))
             {
                 return string.Empty;
             }

@@ -6,7 +6,7 @@
     public static class StringHelper
     {
         /// <summary>Returns a value indicating whether a specified substring occurs within this string.</summary>
-        /// <param name="text">Text in which has to be searched the key string <paramref name="value"/> </param>
+        /// <param name="text">Text in which has to be searched the key string <paramref name="value" /> </param>
         /// <param name="value">The string to seek. </param>
         /// <returns>
         ///     <see langword="true" /> if the <paramref name="value" /> parameter occurs within this string, or if
@@ -83,31 +83,6 @@
             StringComparison stringComparisonMode = StringComparison.Ordinal)
         {
             return CountOccurenceInSource(source, subString, stringComparisonMode);
-        }
-
-        /// <summary>
-        ///     Counts occurrences of <paramref name="subString" /> is <paramref name="source" />
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="subString"></param>
-        /// <param name="mode"></param>
-        /// <returns>Number of occurrences of <paramref name="subStr" /> is <paramref name="source" /></returns>
-        private static int CountOccurenceInSource(string source, string subString, StringComparison mode)
-        {
-            int occurencesCount = 0;
-
-            for (int indexPosition = 0;; indexPosition += subString.Length)
-            {
-                indexPosition = source.IndexOf(subString, indexPosition, mode);
-
-                // searchKey isn't contained by the given substring (indexPosition..plainTextSource.Length-1)
-                if (indexPosition == -1) break;
-
-                // searchKey IS contained by the given substring (indexPosition..plainTextSource.Length-1)
-                ++occurencesCount;
-            }
-
-            return occurencesCount;
         }
 
         /// <summary>
@@ -201,6 +176,31 @@
         public static void Print(this string value, string format)
         {
             Console.Out.WriteLine(format, value);
+        }
+
+        /// <summary>
+        ///     Counts occurrences of <paramref name="subString" /> is <paramref name="source" />
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="subString"></param>
+        /// <param name="mode"></param>
+        /// <returns>Number of occurrences of <paramref name="subStr" /> is <paramref name="source" /></returns>
+        private static int CountOccurenceInSource(string source, string subString, StringComparison mode)
+        {
+            int occurencesCount = 0;
+
+            for (int indexPosition = 0;; indexPosition += subString.Length)
+            {
+                indexPosition = source.IndexOf(subString, indexPosition, mode);
+
+                // searchKey isn't contained by the given substring (indexPosition..plainTextSource.Length-1)
+                if (indexPosition == -1) break;
+
+                // searchKey IS contained by the given substring (indexPosition..plainTextSource.Length-1)
+                ++occurencesCount;
+            }
+
+            return occurencesCount;
         }
     }
 }

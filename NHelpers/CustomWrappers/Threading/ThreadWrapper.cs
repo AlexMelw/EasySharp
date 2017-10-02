@@ -6,7 +6,7 @@ namespace EasySharp.NHelpers.CustomWrappers.Threading
     using System.Threading;
 
     /// <summary>
-    ///     <para>Contains the <see cref="Expression{Action}" /> to be executed in a separate thread.</para>
+    ///     <para>Contains the <see cref="Expression{TDelegate}" /> to be executed in a separate thread.</para>
     ///     <para>Contains the execution order dependencies on other threads.</para>
     ///     <para>
     ///         Contains the execution order dependencies of other threads that are waiting for the current thread
@@ -26,10 +26,10 @@ namespace EasySharp.NHelpers.CustomWrappers.Threading
 
         public ThreadWrapper(int dependenciesNumber, Expression<Action> threadActionExpression, int[] waitForThreads)
             : this(
-                threadWrapperIdentifier: -1,
-                dependenciesNumber: dependenciesNumber,
-                threadActionExpression: threadActionExpression,
-                waitForThreads: waitForThreads) { }
+                -1,
+                dependenciesNumber,
+                threadActionExpression,
+                waitForThreads) { }
 
         public ThreadWrapper(int threadWrapperIdentifier, int dependenciesNumber,
             Expression<Action> threadActionExpression,
