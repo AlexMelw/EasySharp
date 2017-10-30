@@ -13,7 +13,7 @@ namespace EasySharp.NHelpers.CustomWrappers.Threading
     ///         completion.
     ///     </para>
     /// </summary>
-    public class ThreadWrapper
+    public class ThreadWrapper : IDisposable
     {
         private readonly Expression<Action> _threadActionExpression;
         public int ThreadWrapperIdentifier { get; }
@@ -48,6 +48,8 @@ namespace EasySharp.NHelpers.CustomWrappers.Threading
         }
 
         #endregion
+
+        public void Dispose() => PersonalCountdownEvent?.Dispose();
 
         /// <summary>
         ///     Injects <see cref="CountdownEvent" />s, thus imposing the execution order dependencies to threads that are waiting

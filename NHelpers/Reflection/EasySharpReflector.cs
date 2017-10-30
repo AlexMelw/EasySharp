@@ -1,7 +1,6 @@
-using System;
-
 namespace EasySharp.NHelpers.Reflection
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -22,7 +21,7 @@ namespace EasySharp.NHelpers.Reflection
                         ? int.MaxValue - 1
                         : recursiveSerializationMaxLevelDepth
                     : 1,
-                currentRecursionLevel: 1);
+                1);
             return serializedObject;
         }
 
@@ -92,7 +91,7 @@ namespace EasySharp.NHelpers.Reflection
                     string key = propInfo.Name;
 
                     IEnumerable<object> objectsCollection =
-                        ((IEnumerable)propInfo.GetValue(objectGraph)).Cast<object>();
+                        ((IEnumerable) propInfo.GetValue(objectGraph)).Cast<object>();
                     Type itemsType = objectsCollection.GetType().GetItemsType();
                     bool valueItemIsString = itemsType == typeof(string);
                     bool valueItemIsSimpleType = IsSimpleType(itemsType);
@@ -107,8 +106,8 @@ namespace EasySharp.NHelpers.Reflection
                     else if (valueItemIsSimpleType)
                     {
                         value = GenericTypeHelper.ProjectStringSimpleTypesByCommaAndNewLine(
-                            enumerationAsStrings: objectsCollection.Select(o => o.ToString()),
-                            indentation: new string(' ', 4 * (currentRecursionLevel - 1)));
+                            objectsCollection.Select(o => o.ToString()),
+                            new string(' ', 4 * (currentRecursionLevel - 1)));
                     }
                     else
                     {
@@ -157,7 +156,7 @@ namespace EasySharp.NHelpers.Reflection
             string projection = currentRecursionLevel == 1
                 ? ProjectPropertiesSeparatingByCommaAndNewLine(allPropertiesGraph,
                     new string(' ', 4 * (currentRecursionLevel - 1)))
-                : $"{{{(ToJsObjectRepsrezentation(allPropertiesGraph, new string(' ', 4 * (currentRecursionLevel - 1))))}";
+                : $"{{{ToJsObjectRepsrezentation(allPropertiesGraph, new string(' ', 4 * (currentRecursionLevel - 1)))}";
 
             return projection;
         }
@@ -174,11 +173,11 @@ namespace EasySharp.NHelpers.Reflection
         private static bool HasToStringOverridden(this Type type)
         {
             bool isToStringOverridden = type.GetMethod(
-                name: nameof(ToString),
-                bindingAttr: BindingFlags.Instance | BindingFlags.Public,
-                binder: null,
-                types: Type.EmptyTypes,
-                modifiers: null
+                nameof(ToString),
+                BindingFlags.Instance | BindingFlags.Public,
+                null,
+                Type.EmptyTypes,
+                null
             ).IsOverridden();
 
             return isToStringOverridden;
@@ -190,9 +189,9 @@ namespace EasySharp.NHelpers.Reflection
             string NewLine = Environment.NewLine;
 
             return enumerationAsStrings.Aggregate(
-                seed: $"",
-                func: (accumulator, item) => $@"{accumulator}{NewLine}{indentation}{item},",
-                resultSelector: accumulator => $"{accumulator.Substring(2, accumulator.Length - 3)}");
+                $"",
+                (accumulator, item) => $@"{accumulator}{NewLine}{indentation}{item},",
+                accumulator => $"{accumulator.Substring(2, accumulator.Length - 3)}");
         }
 
         private static string ToJsObjectRepsrezentation(IEnumerable<string> enumerationAsStrings,
@@ -201,9 +200,9 @@ namespace EasySharp.NHelpers.Reflection
             string NewLine = Environment.NewLine;
 
             string result = enumerationAsStrings.Aggregate(
-                seed: $"",
-                func: (accumulator, item) => $@"{accumulator}{NewLine}{indentation}{item},",
-                resultSelector: accumulator =>
+                $"",
+                (accumulator, item) => $@"{accumulator}{NewLine}{indentation}{item},",
+                accumulator =>
                     $"{accumulator.Substring(0, accumulator.Length - 1)}{NewLine}{indentation.Substring(0, indentation.Length - 4)}}}");
 
             return result;

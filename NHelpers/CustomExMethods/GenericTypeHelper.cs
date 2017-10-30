@@ -146,6 +146,7 @@
             Console.Out.WriteLine(value);
         }
 
+        [Obsolete("Not Tested", true)]
         public static void PrintRecursively<TValue>(this TValue value,
             int recursiveMaxLevelDepth = int.MaxValue - 1)
         {

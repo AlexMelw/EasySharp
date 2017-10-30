@@ -157,6 +157,7 @@
         /// </param>
         /// <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter" /> is closed. </exception>
         /// <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+        [Obsolete("Not Tested", true)]
         public static void Print(this string value)
         {
             Console.Out.WriteLine(value);
@@ -173,6 +174,7 @@
         /// <param name="format">A composite format <see cref="string" />.</param>
         /// <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter" /> is closed. </exception>
         /// <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+        [Obsolete("Not Tested", true)]
         public static void Print(this string value, string format)
         {
             Console.Out.WriteLine(format, value);

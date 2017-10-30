@@ -8,12 +8,12 @@
         /// </summary>
         /// <example>
         ///     <code>
-        /// static void Enter(object wrapper)
-        /// {
-        ///     var anonymousTypeHolder = wrapper.CastTo(new { x = 0, y = string.Empty });
-        ///     Console.WriteLine($"{anonymousTypeHolder.x} : {anonymousTypeHolder.y}");
-        /// }
-        /// </code>
+        ///         static void Enter(object wrapper)
+        ///         {
+        ///             var anonymousTypeHolder = wrapper.CastTo(new { x = 0, y = string.Empty });
+        ///             Console.WriteLine($"{anonymousTypeHolder.x} : {anonymousTypeHolder.y}");
+        ///         }
+        ///     </code>
         /// </example>
         /// <typeparam name="T">Inferred anonymous type</typeparam>
         /// <param name="value">Wrapper for an anonymous object</param>

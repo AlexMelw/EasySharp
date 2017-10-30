@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomExMethods\ArrayHelper.cs" />
+    <Compile Include="CustomExMethods\ConvertHelper.cs" />
+    <Compile Include="CustomWrappers\Networking\UdpListenerEx.cs" />
     <Compile Include="Reflection\CustomExMethods\AttributeHelper.cs" />
     <Compile Include="Reflection\EasySharpReflector.cs" />
     <Compile Include="CustomExMethods\ExceptionHelper.cs" />
