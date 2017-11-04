@@ -134,7 +134,7 @@
         /// <returns>Array of bytes</returns>
         public static byte[] ToUtf8EncodedByteArray(this string source)
         {
-            return Encoding.UTF8.GetBytes(source.ToCharArray());
+            return Encoding.UTF8.GetBytes(source);
         }
 
         /// <summary>

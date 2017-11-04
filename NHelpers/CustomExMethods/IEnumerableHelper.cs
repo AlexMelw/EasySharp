@@ -7,6 +7,33 @@
 
     public static class IEnumerableHelper
     {
+        /// <summary>
+        ///     Chunks a collection into a collection of collections containing elements of type <typeparamref name="TElement" />.
+        /// </summary>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="chunkSize"></param>
+        /// <returns></returns>
+        public static IEnumerable<IEnumerable<TElement>> ChunkBy<TElement>(this IEnumerable<TElement> source,
+            int chunkSize)
+        {
+            return source
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / chunkSize)
+                .Select(x => x.Select(v => v.Value).ToArray())
+                .ToArray();
+        }
+
+        //public static IEnumerable<List<TElement>> ChunkBy<TElement>(this List<TElement> source,
+        //    int chunkSize)
+        //{
+        //    for (int i = 0; i < source.Count; i += chunkSize)
+        //    {
+        //        yield return source.GetRange(i, Math.Min(chunkSize, source.Count - i));
+        //    }
+        //}
+
+
         /// <summary>Determines whether exists any element of a sequence that satisfies a condition.</summary>
         /// <param name="source">
         ///     An <see cref="T:System.Collections.Generic.IEnumerable`1" /> whose elements to apply the predicate

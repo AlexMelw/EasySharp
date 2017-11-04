@@ -99,6 +99,7 @@
         ///         }.Print();
         /// </code>
         /// </example>
+        [Obsolete("Not Tested", true)]
         public static void Print<TValue>(this TValue value,
             bool allowRecursivePrinting = false,
             int recursiveMaxLevelDepth = int.MaxValue - 1)
