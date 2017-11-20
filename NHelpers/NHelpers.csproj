@@ -66,6 +66,7 @@
     <Compile Include="CustomExMethods\StringHelper.cs" />
     <Compile Include="CustomExMethods\ThreadHelper.cs" />
     <Compile Include="Utils\Cryptography\RngUtil.cs" />
+    <Compile Include="Utils\RandUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
