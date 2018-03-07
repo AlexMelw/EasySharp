@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public static class LinkedListHelper
+    public static class LinkedListExtHelper
     {
         /// <summary>
         ///     Sorts source of type <see cref="LinkedList{T}" /> in ascending order

@@ -3,7 +3,7 @@
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
-    public static class TaskHelper
+    public static class TaskExtHelper
     {
         /// <summary>
         ///     It does the same thing as <c>ConfigureAwait(false)</c>, but just differentiates it in a more visual manner.

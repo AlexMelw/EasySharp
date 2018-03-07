@@ -2,7 +2,7 @@
 {
     using System.Linq;
 
-    public static class TwodimensionalArrayHelper
+    public static class TwodimensionalArrayExtHelper
     {
         public static int[][] MultiplyBy(this int[][] leftMatrix, int[][] rightMatrix)
         {

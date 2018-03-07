@@ -2,7 +2,7 @@
 {
     using System;
 
-    public static class ConvertHelper
+    public static class ConvertExtHelper
     {
         /// <summary>
         ///     Returns an object of the specified type and whose value is equivalent to the specified object.

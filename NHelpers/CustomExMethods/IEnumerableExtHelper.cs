@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public static class IEnumerableHelper
+    public static class IEnumerableExtHelper
     {
         /// <summary>
         ///     Chunks a collection into a collection of collections containing elements of type <typeparamref name="TElement" />.
@@ -20,8 +20,7 @@
             return source
                 .Select((x, i) => new { Index = i, Value = x })
                 .GroupBy(x => x.Index / chunkSize)
-                .Select(x => x.Select(v => v.Value).ToArray())
-                .ToArray();
+                .Select(x => x.Select(v => v.Value));
         }
 
         //public static IEnumerable<List<TElement>> ChunkBy<TElement>(this List<TElement> source,
@@ -33,6 +32,29 @@
         //    }
         //}
 
+		///<summary>Finds the index of the first item matching an expression in an enumerable.</summary>
+		///<param name="items">The enumerable to search.</param>
+		///<param name="predicate">The expression to test the items against.</param>
+		///<returns>The index of the first matching item, or -1 if no items match.</returns>
+		public static int FindIndex<T>(this IEnumerable<T> items, Func<T, bool> predicate) {
+			if (items == null) throw new ArgumentNullException("items");
+			if (predicate == null) throw new ArgumentNullException("predicate");
+
+			int retVal = 0;
+			foreach (var item in items) {
+				if (predicate(item)) return retVal;
+				retVal++;
+			}
+			return -1;
+		}
+		///<summary>Finds the index of the first occurrence of an item in an enumerable.</summary>
+		///<param name="items">The enumerable to search.</param>
+		///<param name="item">The item to find.</param>
+		///<returns>The index of the first matching item, or -1 if the item was not found.</returns>
+		public static int IndexOf<T>(this IEnumerable<T> items, T item) {
+			return items.FindIndex(i => EqualityComparer<T>.Default.Equals(item, i)); 
+		}
+		
 
         /// <summary>Determines whether exists any element of a sequence that satisfies a condition.</summary>
         /// <param name="source">
@@ -107,10 +129,7 @@
         /// <returns>Comma-separated string</returns>
         public static string ToCommaSeparatedString<TSource>(this IEnumerable<TSource> source)
         {
-            if (source == null || !source.Any())
-            {
-                return string.Empty;
-            }
+            if (source == null || !source.Any()) return string.Empty;
 
             return source.Aggregate(
                 string.Empty,
@@ -143,10 +162,7 @@
         /// <returns>Comma-separated string</returns>
         public static string ToCommaSeparatedStringWithEndingDot<TSource>(this IEnumerable<TSource> source)
         {
-            if (source == null || !source.Any())
-            {
-                return string.Empty;
-            }
+            if (source == null || !source.Any()) return string.Empty;
 
             return source.Aggregate(
                 string.Empty,
@@ -179,10 +195,7 @@
         /// <returns><see cref="string" /> as an JS-like array representation.</returns>
         public static string ToJsArrayRepresentation<TSource>(this IEnumerable<TSource> source)
         {
-            if (source == null || !source.Any())
-            {
-                return "[..EMPTY..]";
-            }
+            if (source == null || !source.Any()) return "[..EMPTY..]";
 
             string indentation = "    ";
             string doubleIndentation = indentation + indentation;

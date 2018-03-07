@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public static class DictionaryHelper
+    public static class DictionaryExtHelper
     {
         /// <summary>
         ///     For the given <paramref name="key" /> creates an <see cref="ICollection{T}" /> if it doesn't exist and maps it to

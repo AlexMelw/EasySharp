@@ -100,12 +100,12 @@ namespace EasySharp.NHelpers.Reflection
 
                     if (valueItemIsString)
                     {
-                        value = GenericTypeHelper.ProjectStringSimpleTypesByCommaAndNewLine(objectsCollection,
+                        value = GenericTypeExtHelper.ProjectStringSimpleTypesByCommaAndNewLine(objectsCollection,
                             new string(' ', 4 * (currentRecursionLevel - 1)));
                     }
                     else if (valueItemIsSimpleType)
                     {
-                        value = GenericTypeHelper.ProjectStringSimpleTypesByCommaAndNewLine(
+                        value = GenericTypeExtHelper.ProjectStringSimpleTypesByCommaAndNewLine(
                             objectsCollection.Select(o => o.ToString()),
                             new string(' ', 4 * (currentRecursionLevel - 1)));
                     }

@@ -6,7 +6,7 @@
     using System.Xml.Linq;
     using System.Xml.Serialization;
 
-    public static class XmlHelper
+    public static class XmlExtHelper
     {
         public static T GetAs<T>(this XAttribute attr, T defaultValue = default(T))
         {

@@ -2,7 +2,7 @@
 {
     using System.Reflection;
 
-    public static class AttributeHelper
+    public static class AttributeExtHelper
     {
         /// <summary>
         ///     Checks whether <paramref name="memberOrType" /> has specific attribute <typeparamref name="TAttribute" />.

@@ -8,7 +8,7 @@
     using Reflection;
     using Reflection.CustomExMethods;
 
-    public static class GenericTypeHelper
+    public static class GenericTypeExtHelper
     {
         /// <summary>
         ///     Determines whether the sequence <paramref name="source" /> contains the specified element by using the default

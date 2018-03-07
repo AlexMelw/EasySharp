@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -42,29 +44,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomExMethods\ArrayHelper.cs" />
-    <Compile Include="CustomExMethods\ConvertHelper.cs" />
-    <Compile Include="CustomExMethods\XmlHelper.cs" />
+    <Compile Include="CustomExMethods\ArrayExtHelper.cs" />
+    <Compile Include="CustomExMethods\ConvertExtHelper.cs" />
+    <Compile Include="CustomExMethods\UriExtHelper.cs" />
+    <Compile Include="CustomExMethods\XmlExtHelper.cs" />
     <Compile Include="CustomWrappers\Networking\UdpListenerEx.cs" />
-    <Compile Include="Reflection\CustomExMethods\AttributeHelper.cs" />
+    <Compile Include="Reflection\CustomExMethods\AttributeExtHelper.cs" />
     <Compile Include="Reflection\EasySharpReflector.cs" />
-    <Compile Include="CustomExMethods\ExceptionHelper.cs" />
-    <Compile Include="CustomExMethods\GenericTypeHelper.cs" />
-    <Compile Include="Reflection\CustomExMethods\MethodInfoHelper.cs" />
-    <Compile Include="CustomExMethods\TaskHelper.cs" />
-    <Compile Include="CustomExMethods\TwodimensionalArrayHelper.cs" />
-    <Compile Include="CustomExMethods\DictionaryHelper.cs" />
-    <Compile Include="CustomExMethods\IEnumerableHelper.cs" />
-    <Compile Include="CustomExMethods\ICollectionHelper.cs" />
-    <Compile Include="CustomExMethods\LinkedListHelper.cs" />
-    <Compile Include="CustomExMethods\ListHelper.cs" />
-    <Compile Include="CustomExMethods\LookupHelper.cs" />
-    <Compile Include="CustomExMethods\ObjectHelper.cs" />
+    <Compile Include="CustomExMethods\ExceptionExtHelper.cs" />
+    <Compile Include="CustomExMethods\GenericTypeExtHelper.cs" />
+    <Compile Include="Reflection\CustomExMethods\MethodInfoExtHelper.cs" />
+    <Compile Include="CustomExMethods\TaskExtHelper.cs" />
+    <Compile Include="CustomExMethods\TwodimensionalArrayExtHelper.cs" />
+    <Compile Include="CustomExMethods\DictionaryExtHelper.cs" />
+    <Compile Include="CustomExMethods\IEnumerableExtHelper.cs" />
+    <Compile Include="CustomExMethods\ICollectionExtHelper.cs" />
+    <Compile Include="CustomExMethods\LinkedListExtHelper.cs" />
+    <Compile Include="CustomExMethods\ListExtHelper.cs" />
+    <Compile Include="CustomExMethods\LookupExtHelper.cs" />
+    <Compile Include="CustomExMethods\ObjectExtHelper.cs" />
     <Compile Include="CustomWrappers\Networking\TcpListenerEx.cs" />
     <Compile Include="CustomWrappers\Threading\ThreadWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CustomExMethods\StringHelper.cs" />
-    <Compile Include="CustomExMethods\ThreadHelper.cs" />
+    <Compile Include="CustomExMethods\StringExtHelper.cs" />
+    <Compile Include="CustomExMethods\ThreadExtHelper.cs" />
     <Compile Include="Utils\Cryptography\RngUtil.cs" />
     <Compile Include="Utils\RandUtil.cs" />
   </ItemGroup>

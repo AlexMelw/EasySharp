@@ -7,7 +7,7 @@
     using System.Threading;
     using CustomWrappers.Threading;
 
-    public static class ThreadHelper
+    public static class ThreadExtHelper
     {
         /// <summary>
         ///     The given <see cref="Thread" /> Extension Method creates and returns an instance of the class that

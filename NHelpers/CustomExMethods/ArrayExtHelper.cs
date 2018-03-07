@@ -2,7 +2,7 @@
 {
     using System;
 
-    public static class ArrayHelper
+    public static class ArrayExtHelper
     {
         /// <summary>
         ///     Sets each element in the <paramref name="sourceArray" /> (of type <c>T</c>) to its default value (<c>default(T)</c>

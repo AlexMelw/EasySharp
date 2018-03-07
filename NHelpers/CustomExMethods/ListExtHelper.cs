@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public static class ListHelper
+    public static class ListExtHelper
     {
         /// <summary>
         ///     Shuffles source of type <see cref="IList{T}" />

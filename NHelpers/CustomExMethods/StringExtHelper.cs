@@ -3,7 +3,7 @@
     using System;
     using System.Text;
 
-    public static class StringHelper
+    public static class StringExtHelper
     {
         /// <summary>Returns a value indicating whether a specified substring occurs within this string.</summary>
         /// <param name="text">Text in which has to be searched the key string <paramref name="value" /> </param>

@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public static class LookupHelper
+    public static class LookupExtHelper
     {
         /// <summary>
         ///     Grabs all keys from source as <see cref="IEnumerable{T}" /> where <c>T</c> is <typeparamref name="TKey" />

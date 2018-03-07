@@ -2,7 +2,7 @@
 {
     using System.Reflection;
 
-    public static class MethodInfoHelper
+    public static class MethodInfoExtHelper
     {
         /// <summary>
         ///     Detects whether the given method is overridden.

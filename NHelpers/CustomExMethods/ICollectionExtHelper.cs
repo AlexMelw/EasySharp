@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public static class ICollectionHelper
+    public static class ICollectionExtHelper
     {
         /// <summary>
         ///     Adds <paramref name="value" /> to it lacks this value.

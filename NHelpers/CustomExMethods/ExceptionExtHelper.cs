@@ -4,7 +4,7 @@
     using System.Diagnostics;
     using System.Text;
 
-    public static class ExceptionHelper
+    public static class ExceptionExtHelper
     {
         /// <summary>
         ///     Gets the entire stack trace consisting of exception's footprints (File, Method, LineNumber)

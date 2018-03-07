@@ -1,6 +1,6 @@
 ﻿namespace EasySharp.NHelpers.CustomExMethods
 {
-    public static class ObjectHelper
+    public static class ObjectExtHelper
     {
         /// <summary>
         ///     Converts the variable of type <see cref="object" /> (which underlying type is anonymous) to the same anonymous
@@ -15,11 +15,14 @@
         ///         }
         ///     </code>
         /// </example>
-        /// <typeparam name="T">Inferred anonymous type</typeparam>
+        /// <typeparam name="TTarget">Inferred anonymous type</typeparam>
         /// <param name="value">Wrapper for an anonymous object</param>
-        /// <param name="targetType">Variable provided for type inference</param>
+        /// <param name="target">Variable provided for type inference</param>
         /// <returns>Wrapper casted to the inferred anonymous type</returns>
-        public static T CastTo<T>(this object value, T targetType) => (T) value;
+        //public static TTarget CastTo<TTarget>(this object value, TTarget target = default)
+        //{
+        //    return (TTarget)value;
+        //}
 
         /// <summary>
         ///     SwapElementsAt two values
