@@ -12,6 +12,8 @@ namespace TestDriveProject
 
             Console.Out.WriteLine("ints = {0}", arg0: ints);
             Console.Out.WriteLine("ints = {0}", ints);
+
+            string name = "Alex";
         }
     }
 }

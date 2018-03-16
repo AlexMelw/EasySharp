@@ -25,16 +25,38 @@ namespace EasySharp.ReSharperCustomSourceTemplates
         }
 
         [SourceTemplate]
-        public static void isNullOrEmpty(this string source)
-        {
-            //$string.IsNullOrEmpty(source)$END$
-        }
-
-        [SourceTemplate]
         public static void isNullOrWhiteSpace(this string source)
         {
             //$string.IsNullOrWhiteSpace(source)$END$
         }
+
+        [SourceTemplate]
+        public static void ifnotNullOrWhiteSpace(this string source)
+        {
+            if (!string.IsNullOrWhiteSpace(source))
+            {
+                //$$END$    
+            }
+        }
+
+        [SourceTemplate]
+        public static void ifNullOrWhiteSpace(this string source)
+        {
+            if (string.IsNullOrWhiteSpace(source))
+            {
+                //$$END$    
+            }
+        }
+
+        [SourceTemplate]
+        public static void ifnot(this bool sourceExpr)
+        {
+            if (!sourceExpr)
+            {
+                //$$END$    
+            }
+        }
+
 
         [SourceTemplate]
         [Macro(Target = "TYPE", Expression = "completeType()", Editable = 0)]
