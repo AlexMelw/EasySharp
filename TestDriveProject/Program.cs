@@ -4,16 +4,38 @@ namespace TestDriveProject
 {
     using System;
 
-    internal class Program
+    class Program
     {
         private static void Main(string[] args)
         {
             int[] ints = { 8, 2, 1, 6, 4, 5, 3, 4, 5 };
+            var name = "Alex";
+            
 
-            Console.Out.WriteLine("ints = {0}", arg0: ints);
-            Console.Out.WriteLine("ints = {0}", ints);
+            Console.Out.WriteLine($"name = {name}");
 
-            string name = "Alex";
+            var employee = new Employee();
+
+            employee.DoThat();
         }
     }
+
+    class Person
+    {
+        public string Name { get; set; }
+
+        public void DoThis() { }
+    }
+
+    class Employee : Person
+    {
+        public string IDNP { get; set; }
+
+        public void DoThat()
+        {
+            DoThis();
+        }
+    }
+
+
 }
