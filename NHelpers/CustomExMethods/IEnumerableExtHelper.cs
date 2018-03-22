@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     public static class IEnumerableExtHelper
     {
@@ -32,29 +33,34 @@
         //    }
         //}
 
-		///<summary>Finds the index of the first item matching an expression in an enumerable.</summary>
-		///<param name="items">The enumerable to search.</param>
-		///<param name="predicate">The expression to test the items against.</param>
-		///<returns>The index of the first matching item, or -1 if no items match.</returns>
-		public static int FindIndex<T>(this IEnumerable<T> items, Func<T, bool> predicate) {
-			if (items == null) throw new ArgumentNullException("items");
-			if (predicate == null) throw new ArgumentNullException("predicate");
+        ///<summary>Finds the index of the first item matching an expression in an enumerable.</summary>
+        ///<param name="items">The enumerable to search.</param>
+        ///<param name="predicate">The expression to test the items against.</param>
+        ///<returns>The index of the first matching item, or -1 if no items match.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> items, Func<T, bool> predicate)
+        {
+            if (items == null) throw new ArgumentNullException("items");
+            if (predicate == null) throw new ArgumentNullException("predicate");
 
-			int retVal = 0;
-			foreach (var item in items) {
-				if (predicate(item)) return retVal;
-				retVal++;
-			}
-			return -1;
-		}
-		///<summary>Finds the index of the first occurrence of an item in an enumerable.</summary>
-		///<param name="items">The enumerable to search.</param>
-		///<param name="item">The item to find.</param>
-		///<returns>The index of the first matching item, or -1 if the item was not found.</returns>
-		public static int IndexOf<T>(this IEnumerable<T> items, T item) {
-			return items.FindIndex(i => EqualityComparer<T>.Default.Equals(item, i)); 
-		}
-		
+            int retVal = 0;
+            foreach (var item in items)
+            {
+                if (predicate(item)) return retVal;
+                retVal++;
+            }
+
+            return -1;
+        }
+
+        ///<summary>Finds the index of the first occurrence of an item in an enumerable.</summary>
+        ///<param name="items">The enumerable to search.</param>
+        ///<param name="item">The item to find.</param>
+        ///<returns>The index of the first matching item, or -1 if the item was not found.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> items, T item)
+        {
+            return items.IndexOf(i => EqualityComparer<T>.Default.Equals(item, i));
+        }
+
 
         /// <summary>Determines whether exists any element of a sequence that satisfies a condition.</summary>
         /// <param name="source">
@@ -221,6 +227,110 @@
         public static string ToJsArrayRepresentation<TSource>(params TSource[] source)
         {
             return source.ToJsArrayRepresentation();
+        }
+
+        /// <summary>
+        ///     Reduces an <see cref="IEnumerable{T}">IEnumerable&lt;char&gt;</see>
+        ///     to a <see cref="string" />.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string AggregateToString(this IEnumerable<char> source)
+        {
+            return source.Aggregate(new StringBuilder(), (builder, character) => builder.Append(character)).ToString();
+        }
+
+        public delegate void ForEachAction<in TItem>(TItem item, ItemInfo info);
+
+        public static void ForEach<TItem>(this IEnumerable<TItem> elements, ForEachAction<TItem> action)
+        {
+            using (IEnumerator<TItem> enumerator = elements.GetEnumerator())
+            {
+                bool isFirst = true;
+                bool hasNext = enumerator.MoveNext();
+                int index = -1;
+                while (hasNext)
+                {
+                    TItem current = enumerator.Current;
+                    hasNext = enumerator.MoveNext();
+                    action(current, new ItemInfo(++index, isFirst, isLast: !hasNext));
+                    isFirst = false;
+                }
+            }
+        }
+
+        //public static void ForEach<TItem>(this IEnumerable<TItem> elements, Action<TItem, int> action)
+        //{
+        //    using (IEnumerator<TItem> enumerator = elements.GetEnumerator())
+        //    {
+        //        bool hasNext = enumerator.MoveNext();
+        //        int index = 0;
+        //        while (hasNext)
+        //        {
+        //            TItem current = enumerator.Current;
+        //            hasNext = enumerator.MoveNext();
+        //            action(current, ++index);
+        //        }
+        //    }
+        //}
+
+        public struct ItemInfo
+        {
+            public int Index { get; }
+            public bool IsFirst { get; }
+            public bool IsLast { get; }
+
+            public ItemInfo(int index, bool isFirst, bool isLast) : this()
+            {
+                Index = index;
+                IsFirst = isFirst;
+                IsLast = isLast;
+            }
+        }
+
+        /// <summary>
+        /// Adds additional properties (Index, IsFirst, IsLast) to the item, by enclosing it in a <see cref="IterationEntry{T}"/> wrapper.
+        /// </summary>
+        /// <typeparam name="TItem">The original item's type.</typeparam>
+        /// <param name="source">The original <see cref="IEnumerable{T}"/> source.</param>
+        /// <returns><see cref="IEnumerable{T}">IEnumerable&lt;IterationEntry&lt;TItem&gt;&gt;</see>
+        /// </returns>
+        public static IEnumerable<IterationEntry<TItem>> WithDetails<TItem>(this IEnumerable<TItem> source)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            using (var enumerator = source.GetEnumerator())
+            {
+                bool isFirst = true;
+                bool hasNext = enumerator.MoveNext();
+                int index = -1;
+                while (hasNext)
+                {
+                    TItem current = enumerator.Current;
+                    hasNext = enumerator.MoveNext();
+                    yield return new IterationEntry<TItem>(++index, current, isFirst, isLast: !hasNext);
+                    isFirst = false;
+                }
+            }
+        }
+
+        public struct IterationEntry<T>
+        {
+            public int Index { get; }
+            public bool IsFirst { get; }
+            public bool IsLast { get; }
+            public T Value { get; }
+
+            public IterationEntry(int index, T value, bool isFirst, bool isLast) : this()
+            {
+                Index = index;
+                IsFirst = isFirst;
+                IsLast = isLast;
+                Value = value;
+            }
+
+            public override string ToString() => $"{Value}";
         }
     }
 }

@@ -5,7 +5,7 @@ namespace EasySharp.NHelpers.CustomWrappers.Exceptions
     using System;
 
     /// <summary>
-    ///     Helper class that exposes 2 methods for creation of exception-safe delegate wrappers.
+    ///     Exception-safe delegate wrappers creator.
     /// </summary>
     /// <example>
     ///     class Example
