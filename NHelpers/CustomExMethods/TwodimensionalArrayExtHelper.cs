@@ -11,20 +11,14 @@
                 return null; // Matrices are of incompatible dimensions
             }
 
-            return leftMatrix.Select( // goes through <leftMatrix matrix> row by row
-                    (leftMatrixRow, leftMatrixRowIndexThatIsNotUsed) =>
+            return leftMatrix.Select(leftMatrixRow => // goes through <leftMatrix matrix> row by row
                         rightMatrix[0].Select( // goes through first row of <rightMatrix> cell by cell
-                                (rightFirstRow, rightMatrixColumnIndex) =>
-                                    rightMatrix
-                                        .Select(rightRow => rightRow[
-                                            rightMatrixColumnIndex]) // selects column from <rightMatrix> for <rightMatrixColumnIndex>
-                                        .Zip(leftMatrixRow,
-                                            (rowCell, columnCell) => rowCell * columnCell) // does scalar product
+                                (rightFirstRow, rightMatrixColumnIndex) => rightMatrix
+                                        .Select(rightRow => rightRow[rightMatrixColumnIndex]) // selects column from <rightMatrix> for <rightMatrixColumnIndex>
+                                        .Zip(leftMatrixRow, (rowCell, columnCell) => rowCell * columnCell) // does scalar product
                                         .Sum() // computes the sum of the products (rowCell * columnCell) sequence.
-                            )
-                            .ToArray() // the new cell within computed matrix
-                )
-                .ToArray(); // the computed matrix itself
+                            ).ToArray() // the new cell within computed matrix
+                ).ToArray(); // the computed matrix itself
         }
     }
 
