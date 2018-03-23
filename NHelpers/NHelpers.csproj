@@ -46,8 +46,10 @@
   <ItemGroup>
     <Compile Include="CustomExMethods\ArrayExtHelper.cs" />
     <Compile Include="CustomExMethods\ConvertExtHelper.cs" />
+    <Compile Include="CustomExMethods\MaybeExtHelper.cs" />
     <Compile Include="CustomExMethods\UriExtHelper.cs" />
     <Compile Include="CustomExMethods\XmlExtHelper.cs" />
+    <Compile Include="CustomWrappers\Exceptions\Maybe.cs" />
     <Compile Include="CustomWrappers\Exceptions\SafePod.cs" />
     <Compile Include="CustomWrappers\Networking\UdpListenerEx.cs" />
     <Compile Include="Reflection\CustomExMethods\AttributeExtHelper.cs" />

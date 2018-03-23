@@ -15,7 +15,7 @@
                         rightMatrix[0].Select( // goes through first row of <rightMatrix> cell by cell
                                 (rightFirstRow, rightMatrixColumnIndex) => rightMatrix
                                         .Select(rightRow => rightRow[rightMatrixColumnIndex]) // selects column from <rightMatrix> for <rightMatrixColumnIndex>
-                                        .Zip(leftMatrixRow, (rowCell, columnCell) => rowCell * columnCell) // does scalar product
+                                        .Zip(leftMatrixRow, (columnCell, rowCell) => rowCell * columnCell) // does scalar product
                                         .Sum() // computes the sum of the products (rowCell * columnCell) sequence.
                             ).ToArray() // the new cell within computed matrix
                 ).ToArray(); // the computed matrix itself
