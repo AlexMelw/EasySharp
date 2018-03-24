@@ -26,6 +26,7 @@ namespace EasySharp.NHelpers.CustomWrappers.Exceptions
     ///         private static double Calc3() =&gt; 3.000001;
     ///     }
     /// </example>
+    /// <remarks><seealso cref="https://stackoverflow.com/a/49465494/5259296"/></remarks>
     public static class SafePod
     {
         public static Func<TResult?> CreateForValueTypeResult<TResult>(Func<TResult> jobUnit) where TResult : struct

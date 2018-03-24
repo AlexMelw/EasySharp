@@ -113,6 +113,5 @@
     public static class Maybe
     {
         public static Maybe<T> Some<T>(T value) => Maybe<T>.Some(value);
-        public static Maybe<T> None<T>() => Maybe<T>.None;
     }
 }
