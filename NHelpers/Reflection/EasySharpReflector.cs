@@ -5,8 +5,8 @@ namespace EasySharp.NHelpers.Reflection
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using CustomExMethods;
-    using NHelpers.CustomExMethods;
+    using Common.Extensions;
+    using Extensions;
 
     public static class EasySharpReflector
     {
@@ -100,12 +100,12 @@ namespace EasySharp.NHelpers.Reflection
 
                     if (valueItemIsString)
                     {
-                        value = GenericTypeExtHelper.ProjectStringSimpleTypesByCommaAndNewLine(objectsCollection,
+                        value = GenericTypeExtensions.ProjectStringSimpleTypesByCommaAndNewLine(objectsCollection,
                             new string(' ', 4 * (currentRecursionLevel - 1)));
                     }
                     else if (valueItemIsSimpleType)
                     {
-                        value = GenericTypeExtHelper.ProjectStringSimpleTypesByCommaAndNewLine(
+                        value = GenericTypeExtensions.ProjectStringSimpleTypesByCommaAndNewLine(
                             objectsCollection.Select(o => o.ToString()),
                             new string(' ', 4 * (currentRecursionLevel - 1)));
                     }
