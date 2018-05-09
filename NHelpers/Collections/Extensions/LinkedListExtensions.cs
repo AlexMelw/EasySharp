@@ -19,7 +19,7 @@
             LinkedList<TSource> tempLinkedList = new LinkedList<TSource>(source);
             source.Clear();
             IEnumerable<TSource> orderedEnumerable = tempLinkedList.OrderBy(keySelector).AsEnumerable();
-            orderedEnumerable.ForEach(value => source.AddLast(value));
+            orderedEnumerable.ForEachDo(value => source.AddLast(value));
         }
 
         /// <summary>
@@ -35,7 +35,7 @@
             LinkedList<TSource> tempLinkedList = new LinkedList<TSource>(source);
             source.Clear();
             IEnumerable<TSource> orderedEnumerable = tempLinkedList.OrderByDescending(keySelector).AsEnumerable();
-            orderedEnumerable.ForEach(value => source.AddLast(value));
+            orderedEnumerable.ForEachDo(value => source.AddLast(value));
         }
 
         /// <summary>
@@ -54,7 +54,7 @@
         {
             LinkedList<TSource> tempLinkedList = new LinkedList<TSource>();
             IEnumerable<TSource> orderedEnumerable = source.OrderBy(keySelector).AsEnumerable();
-            orderedEnumerable.ForEach(value => tempLinkedList.AddLast(value));
+            orderedEnumerable.ForEachDo(value => tempLinkedList.AddLast(value));
             return tempLinkedList;
         }
 
@@ -74,7 +74,7 @@
         {
             LinkedList<TSource> tempLinkedList = new LinkedList<TSource>();
             IEnumerable<TSource> orderedEnumerable = source.OrderByDescending(keySelector).AsEnumerable();
-            orderedEnumerable.ForEach(value => tempLinkedList.AddLast(value));
+            orderedEnumerable.ForEachDo(value => tempLinkedList.AddLast(value));
             return tempLinkedList;
         }
     }

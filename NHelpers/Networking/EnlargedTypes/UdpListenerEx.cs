@@ -1,10 +1,10 @@
-﻿namespace EasySharp.NHelpers.Networking.Enlarged
+﻿namespace EasySharp.NHelpers.Networking.EnlargedTypes
 {
     using System.Net;
     using System.Net.Sockets;
 
     /// <summary>
-    ///     <para>Wrapper around UdpClient that exposes the Active property.</para>
+    ///     <para>Wrapper around UdpClient that exposes the IsActive property.</para>
     ///     <para>
     ///         UdpListenerEx also differentiates UdpClient in a more visual manner stating that it is explicitly used for
     ///         listening purposes.

@@ -18,7 +18,14 @@ namespace EasySharp.ReSharperCustomSourceTemplates
         }
 
         [SourceTemplate]
-        [Macro(Target = "lvalue", Expression = "suggestVariableName()", Editable = 0)]
+        [Macro(Target = "suggestion", Editable = 1, Expression = "variableOfType()")]
+        public static void outv<T>(this T source)
+        {
+            //$ Console.Out.WriteLine($"$suggestion$ = {source}");
+        }
+
+        [SourceTemplate]
+        [Macro(Target = "lvalue", Editable = 0, Expression = "suggestVariableName()")]
         public static void assign<T>(this T source)
         {
             //$ lvalue = source;
@@ -31,18 +38,18 @@ namespace EasySharp.ReSharperCustomSourceTemplates
         }
 
         [SourceTemplate]
-        public static void ifnotNullOrWhiteSpace(this string source)
+        public static void ifNullOrWhiteSpace(this string source)
         {
-            if (!string.IsNullOrWhiteSpace(source))
+            if (string.IsNullOrWhiteSpace(source))
             {
                 //$$END$    
             }
         }
 
         [SourceTemplate]
-        public static void ifNullOrWhiteSpace(this string source)
+        public static void ifnotNullOrWhiteSpace(this string source)
         {
-            if (string.IsNullOrWhiteSpace(source))
+            if (!string.IsNullOrWhiteSpace(source))
             {
                 //$$END$    
             }

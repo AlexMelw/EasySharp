@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
 
@@ -15,6 +16,7 @@
         /// <param name="source"></param>
         /// <param name="chunkSize"></param>
         /// <returns></returns>
+        [DebuggerStepThrough]
         public static IEnumerable<IEnumerable<TElement>> ChunkBy<TElement>(this IEnumerable<TElement> source,
             int chunkSize)
         {
@@ -37,6 +39,7 @@
         ///<param name="items">The enumerable to search.</param>
         ///<param name="predicate">The expression to test the items against.</param>
         ///<returns>The index of the first matching item, or -1 if no items match.</returns>
+        [DebuggerStepThrough]
         public static int IndexOf<T>(this IEnumerable<T> items, Func<T, bool> predicate)
         {
             if (items == null) throw new ArgumentNullException("items");
@@ -56,6 +59,7 @@
         ///<param name="items">The enumerable to search.</param>
         ///<param name="item">The item to find.</param>
         ///<returns>The index of the first matching item, or -1 if the item was not found.</returns>
+        [DebuggerStepThrough]
         public static int IndexOf<T>(this IEnumerable<T> items, T item)
         {
             return items.IndexOf(i => EqualityComparer<T>.Default.Equals(item, i));
@@ -76,6 +80,7 @@
         /// <exception cref="T:System.ArgumentNullException">
         ///     <paramref name="source" /> or <paramref name="predicate" /> is null.
         /// </exception>
+        [DebuggerStepThrough]
         public static bool Exists<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return source.Any(predicate);
@@ -87,6 +92,7 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="source">An <see cref="IEnumerable{T}" /> that contains the elements to be counted.</param>
         /// <returns><c>true</c> if length is 0, else <c>false</c>.</returns>
+        [DebuggerStepThrough]
         public static bool IsEmpty<T>(this IEnumerable<T> source)
         {
             return source.LongCount().Equals(0L);
@@ -97,6 +103,7 @@
         /// </summary>
         /// <param name="source"></param>
         /// <returns><c>true</c> if length is 0, else <c>false</c>.</returns>
+        [DebuggerStepThrough]
         public static bool IsEmpty(this IEnumerable source)
         {
             return source.Cast<object>().LongCount().Equals(0L);
@@ -115,13 +122,16 @@
         ///     <see cref="IEnumerable{T}" />.
         /// </param>
         /// <exception cref="ArgumentNullException">Passed <paramref name="action" /> is null</exception>
-        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
+        [DebuggerStepThrough]
+        public static IEnumerable<T> ForEachDo<T>(this IEnumerable<T> source, Action<T> action)
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
 
             foreach (T element in source)
                 action(element);
+
+            return source;
         }
 
         /// <summary>
@@ -133,6 +143,7 @@
         ///     <see cref="string" />
         /// </param>
         /// <returns>Comma-separated string</returns>
+        [DebuggerStepThrough]
         public static string ToCommaSeparatedString<TSource>(this IEnumerable<TSource> source)
         {
             if (source == null || !source.Any()) return string.Empty;
@@ -152,6 +163,7 @@
         ///     <see cref="string" />
         /// </param>
         /// <returns>Comma separated string</returns>
+        [DebuggerStepThrough]
         public static string ToCommaSeparatedString<TSource>(params TSource[] source)
         {
             return source.ToCommaSeparatedString();
@@ -166,6 +178,7 @@
         ///     <see cref="string" /> with a dot at the end.
         /// </param>
         /// <returns>Comma-separated string</returns>
+        [DebuggerStepThrough]
         public static string ToCommaSeparatedStringWithEndingDot<TSource>(this IEnumerable<TSource> source)
         {
             if (source == null || !source.Any()) return string.Empty;
@@ -185,6 +198,7 @@
         ///     <see cref="string" /> with a dot at the end.
         /// </param>
         /// <returns>Comma separated string</returns>
+        [DebuggerStepThrough]
         public static string ToCommaSeparatedStringWithEndingDot<TSource>(params TSource[] source)
         {
             return source.ToCommaSeparatedStringWithEndingDot();
@@ -199,6 +213,8 @@
         ///     <see cref="string" /> with a dot at the end.
         /// </param>
         /// <returns><see cref="string" /> as an JS-like array representation.</returns>
+        [DebuggerStepThrough]
+        [Obsolete]
         public static string ToJsArrayRepresentation<TSource>(this IEnumerable<TSource> source)
         {
             if (source == null || !source.Any()) return "[..EMPTY..]";
@@ -224,6 +240,8 @@
         ///     <see cref="string" /> with a dot at the end.
         /// </param>
         /// <returns><see cref="string" /> as an JS-like array representation.</returns>
+        [DebuggerStepThrough]
+        [Obsolete]
         public static string ToJsArrayRepresentation<TSource>(params TSource[] source)
         {
             return source.ToJsArrayRepresentation();
@@ -235,6 +253,7 @@
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
+        [DebuggerStepThrough]
         public static string AggregateToString(this IEnumerable<char> source)
         {
             return source.Aggregate(new StringBuilder(), (builder, character) => builder.Append(character)).ToString();
@@ -242,7 +261,8 @@
 
         public delegate void ForEachAction<in TItem>(TItem item, ItemInfo info);
 
-        public static void ForEach<TItem>(this IEnumerable<TItem> elements, ForEachAction<TItem> action)
+        [DebuggerStepThrough]
+        public static IEnumerable<TItem> ForEachDo<TItem>(this IEnumerable<TItem> elements, ForEachAction<TItem> action)
         {
             using (IEnumerator<TItem> enumerator = elements.GetEnumerator())
             {
@@ -257,6 +277,8 @@
                     isFirst = false;
                 }
             }
+
+            return elements;
         }
 
         //public static void ForEach<TItem>(this IEnumerable<TItem> elements, Action<TItem, int> action)
@@ -295,6 +317,7 @@
         /// <param name="source">The original <see cref="IEnumerable{T}"/> source.</param>
         /// <returns><see cref="IEnumerable{T}">IEnumerable&lt;IterationEntry&lt;TItem&gt;&gt;</see>
         /// </returns>
+        [DebuggerStepThrough]
         public static IEnumerable<IterationEntry<TItem>> WithDetails<TItem>(this IEnumerable<TItem> source)
         {
             if (source == null)

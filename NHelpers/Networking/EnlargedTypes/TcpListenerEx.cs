@@ -1,10 +1,10 @@
-﻿namespace EasySharp.NHelpers.Networking.Enlarged
+﻿namespace EasySharp.NHelpers.Networking.EnlargedTypes
 {
     using System.Net;
     using System.Net.Sockets;
 
     /// <summary>
-    ///     Wrapper around TcpListener that exposes the Active property
+    ///     Wrapper around TcpListener that exposes the IsActive property
     /// </summary>
     public class TcpListenerEx : TcpListener
     {
@@ -13,14 +13,14 @@
         ///     for client connections.
         /// </summary>
         /// <returns>true if <see cref="T:System.Net.Sockets.TcpListener" /> is not actively listening; otherwise, false.</returns>
-        public bool Inactive => !base.Active;
+        public bool IsInactive => !base.Active;
 
         /// <summary>
         ///     Gets a value that indicates whether <see cref="T:System.Net.Sockets.TcpListener" /> is actively listening for
         ///     client connections.
         /// </summary>
         /// <returns>true if <see cref="T:System.Net.Sockets.TcpListener" /> is actively listening; otherwise, false.</returns>
-        public new bool Active => base.Active;
+        public bool IsActive => base.Active;
 
         #region CONSTRUCTORS
 
