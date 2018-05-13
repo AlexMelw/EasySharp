@@ -112,8 +112,8 @@
         /// <summary>
         ///     Performs the specified action on each element of the <see cref="IEnumerable{T}" />.
         /// </summary>
-        /// <typeparam name="T">Type of elements in <paramref name="source" /></typeparam>
-        /// <param name="source">
+        /// <typeparam name="T">Type of elements in <paramref name="elements" /></typeparam>
+        /// <param name="elements">
         ///     <see cref="IEnumerable{T}" /> sequence of values on which should be performed the
         ///     <paramref name="action" />
         /// </param>
@@ -122,16 +122,17 @@
         ///     <see cref="IEnumerable{T}" />.
         /// </param>
         /// <exception cref="ArgumentNullException">Passed <paramref name="action" /> is null</exception>
+        /// <returns>Self reference to <paramref name="elements" /></returns>
         [DebuggerStepThrough]
-        public static IEnumerable<T> ForEachDo<T>(this IEnumerable<T> source, Action<T> action)
+        public static IEnumerable<T> ForEachDo<T>(this IEnumerable<T> elements, Action<T> action)
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
 
-            foreach (T element in source)
+            foreach (T element in elements)
                 action(element);
 
-            return source;
+            return elements;
         }
 
         /// <summary>
@@ -213,24 +214,6 @@
         ///     <see cref="string" /> with a dot at the end.
         /// </param>
         /// <returns><see cref="string" /> as an JS-like array representation.</returns>
-        [DebuggerStepThrough]
-        [Obsolete]
-        public static string ToJsArrayRepresentation<TSource>(this IEnumerable<TSource> source)
-        {
-            if (source == null || !source.Any()) return "[..EMPTY..]";
-
-            string indentation = "    ";
-            string doubleIndentation = indentation + indentation;
-
-            return source.Aggregate(
-                $"[",
-                (accumulator, item) =>
-                    $@"{accumulator}{Environment.NewLine}{indentation}{{{Environment.NewLine}{doubleIndentation}{
-                            item.ToString().Replace(Environment.NewLine, $"{Environment.NewLine}{doubleIndentation}")
-                        }{Environment.NewLine}{indentation}}},",
-                accumulator => $"{accumulator.Substring(0, accumulator.Length - 1)}{Environment.NewLine}]");
-        }
-
         /// <summary>
         ///     Aggregates an <paramref name="source" /> of type <see cref="IEnumerable{TSource}" /> to an JS-like array
         ///     representation.
@@ -240,13 +223,6 @@
         ///     <see cref="string" /> with a dot at the end.
         /// </param>
         /// <returns><see cref="string" /> as an JS-like array representation.</returns>
-        [DebuggerStepThrough]
-        [Obsolete]
-        public static string ToJsArrayRepresentation<TSource>(params TSource[] source)
-        {
-            return source.ToJsArrayRepresentation();
-        }
-
         /// <summary>
         ///     Reduces an <see cref="IEnumerable{T}">IEnumerable&lt;char&gt;</see>
         ///     to a <see cref="string" />.
@@ -259,11 +235,28 @@
             return source.Aggregate(new StringBuilder(), (builder, character) => builder.Append(character)).ToString();
         }
 
-        public delegate void ForEachAction<in TItem>(TItem item, ItemInfo info);
 
+        /// <summary>
+        ///     Performs the specified action on each element of the <see cref="IEnumerable{T}" />. Adds details about each current
+        ///     item (like "Index","IsFirst","IsLast").
+        /// </summary>
+        /// <typeparam name="TItem">Type of elements in <paramref name="elements" /></typeparam>
+        /// <param name="elements">
+        ///     <see cref="IEnumerable{T}" /> sequence of values on which should be performed the
+        ///     <paramref name="action" />
+        /// </param>
+        /// <param name="action">
+        ///     The <see cref="Action{T}" /> delegate to perform on each element of the
+        ///     <see cref="IEnumerable{T}" /> and expose additional info about current item (like "Index","IsFirst","IsLast").
+        /// </param>
+        /// <returns>Self reference to <paramref name="elements" /></returns>
+        /// <exception cref="Exception">A delegate callback throws an exception.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="elements" /> is <see langword="null" /></exception>
         [DebuggerStepThrough]
-        public static IEnumerable<TItem> ForEachDo<TItem>(this IEnumerable<TItem> elements, ForEachAction<TItem> action)
+        public static IEnumerable<TItem> ForEachWithDetailsDo<TItem>(this IEnumerable<TItem> elements, ForEachAction<TItem> action)
         {
+            if (elements == null) throw new ArgumentNullException(nameof(elements));
+
             using (IEnumerator<TItem> enumerator = elements.GetEnumerator())
             {
                 bool isFirst = true;
@@ -273,13 +266,53 @@
                 {
                     TItem current = enumerator.Current;
                     hasNext = enumerator.MoveNext();
-                    action(current, new ItemInfo(++index, isFirst, isLast: !hasNext));
+                    var itemInfo = new ItemInfo(++index, isFirst, !hasNext);
+                    action?.Invoke(current, itemInfo);
                     isFirst = false;
                 }
             }
 
             return elements;
         }
+
+        /// <summary>
+        ///     Adds additional properties (Index, IsFirst, IsLast) to the item, by enclosing it in a
+        ///     <see cref="IterationEntry{T}" /> wrapper.
+        /// </summary>
+        /// <typeparam name="TItem">The original item's type.</typeparam>
+        /// <param name="source">The original <see cref="IEnumerable{T}" /> source.</param>
+        /// <returns>
+        ///     <see cref="IEnumerable{T}">IEnumerable&lt;IterationEntry&lt;TItem&gt;&gt;</see>
+        /// </returns>
+        [DebuggerStepThrough]
+        public static IEnumerable<IterationEntry<TItem>> WithDetails<TItem>(this IEnumerable<TItem> source)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            using (var enumerator = source.GetEnumerator())
+            {
+                bool isFirst = true;
+                bool hasNext = enumerator.MoveNext();
+                int index = -1;
+                while (hasNext)
+                {
+                    TItem current = enumerator.Current;
+                    hasNext = enumerator.MoveNext();
+                    yield return new IterationEntry<TItem>(++index, current, isFirst, !hasNext);
+                    isFirst = false;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     The <see cref="Action{T}" /> delegate to perform on each element of the <see cref="IEnumerable{T}" /> and expose
+        ///     additional info about current item (like "Index","IsFirst","IsLast").
+        /// </summary>
+        /// <typeparam name="TItem">Item type.</typeparam>
+        /// <param name="item">Current item.</param>
+        /// <param name="info">Additional info about current item (like "Index","IsFirst","IsLast").</param>
+        public delegate void ForEachAction<in TItem>(TItem item, ItemInfo info);
 
         //public static void ForEach<TItem>(this IEnumerable<TItem> elements, Action<TItem, int> action)
         //{
@@ -307,34 +340,6 @@
                 Index = index;
                 IsFirst = isFirst;
                 IsLast = isLast;
-            }
-        }
-
-        /// <summary>
-        /// Adds additional properties (Index, IsFirst, IsLast) to the item, by enclosing it in a <see cref="IterationEntry{T}"/> wrapper.
-        /// </summary>
-        /// <typeparam name="TItem">The original item's type.</typeparam>
-        /// <param name="source">The original <see cref="IEnumerable{T}"/> source.</param>
-        /// <returns><see cref="IEnumerable{T}">IEnumerable&lt;IterationEntry&lt;TItem&gt;&gt;</see>
-        /// </returns>
-        [DebuggerStepThrough]
-        public static IEnumerable<IterationEntry<TItem>> WithDetails<TItem>(this IEnumerable<TItem> source)
-        {
-            if (source == null)
-                throw new ArgumentNullException(nameof(source));
-
-            using (var enumerator = source.GetEnumerator())
-            {
-                bool isFirst = true;
-                bool hasNext = enumerator.MoveNext();
-                int index = -1;
-                while (hasNext)
-                {
-                    TItem current = enumerator.Current;
-                    hasNext = enumerator.MoveNext();
-                    yield return new IterationEntry<TItem>(++index, current, isFirst, isLast: !hasNext);
-                    isFirst = false;
-                }
             }
         }
 

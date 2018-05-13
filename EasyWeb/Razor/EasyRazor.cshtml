@@ -1,0 +1,83 @@
+﻿@using System
+<!-- EasySharp Razor Helpers -->
+
+@helper CreatePaginationControls(string baseUrl, int itemsNumber, int pageSize, int currentPage,
+    Paginator.PaginationSize size, string previous, string next)
+{
+    int completePages = itemsNumber / pageSize; // 0..N
+    int incompletePages = itemsNumber % pageSize; // 0..1
+    int totalPages = completePages + incompletePages;
+
+    <nav>
+        <ul class="pagination @{ switch (size) {
+                                     case Paginator.PaginationSize.Small:
+                                         @Html.Raw("pagination-sm")
+                                         break;
+                                     case Paginator.PaginationSize.Normal:
+                                         @Html.Raw("pagination")
+                                         break;
+                                     case Paginator.PaginationSize.Large:
+                                         @Html.Raw("pagination-lg")
+                                         break;
+                                     default:
+                                         throw new ArgumentOutOfRangeException(nameof(size), size, null);
+                                 } } justify-content-center">
+
+            <li class="page-item@( currentPage == 1 ? " disabled" : "")">
+                @if (currentPage == 1)
+                {
+                    <a class="page-link" href="#">Precedentă</a>
+                }
+                else
+                {
+                    <a class="page-link" href="@( $"{baseUrl}/?pageSize={pageSize}&page={currentPage - 1}")">@previous</a>
+                }
+            </li>
+
+
+            @{ var pageMetaThumbnails = Paginator.Create(totalPages, currentPage).GetPaginationLayout(); }
+
+            @foreach (var thumbnail in pageMetaThumbnails)
+            {
+                <li class="page-item@( thumbnail.IsActive ? " active" : "")">
+                    @if (thumbnail.IsActive || thumbnail.IsBreadcrumb)
+                    {
+                        <a class="page-link" href="#">
+                            @thumbnail.TextValue
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="page-link" href="@( $"{baseUrl}/?pageSize={pageSize}&page={thumbnail.Index}")">
+                            @thumbnail.TextValue
+                        </a>
+                    }
+                </li>
+            }
+
+            <li class="page-item@( currentPage == totalPages ? " disabled" : "")">
+                @if (currentPage == totalPages)
+                {
+                    <a class="page-link" href="#">Următoare</a>
+                }
+                else
+                {
+                    <a class="page-link" href="@( $"{baseUrl}/?pageSize={pageSize}&page={currentPage + 1}")">@next</a>
+                }
+            </li>
+
+        </ul>
+    </nav>
+}
+
+@helper CreatePaginationControls(string baseUrl, int itemsNumber, int pageSize, int currentPage,
+    Paginator.PaginationSize size = Paginator.PaginationSize.Normal)
+{
+    @CreatePaginationControls(baseUrl, itemsNumber, pageSize, currentPage, size, "Prev", "Next")
+}
+
+@helper CreatePaginationControls(string baseUrl, int itemsNumber, int pageSize, int currentPage,
+    string previous, string next)
+{
+    @CreatePaginationControls(baseUrl, itemsNumber, pageSize, currentPage, Paginator.PaginationSize.Normal, previous, next)
+}
