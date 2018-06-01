@@ -7,7 +7,7 @@
     <ProjectGuid>{F1AFC67A-62D8-4D9B-934B-421BC6A9E29B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EasyWeb</RootNamespace>
+    <RootNamespace>EasySharp.EasyWeb</RootNamespace>
     <AssemblyName>EasyWeb</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Paginator.cs" />
   </ItemGroup>

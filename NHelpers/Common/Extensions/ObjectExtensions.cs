@@ -10,7 +10,7 @@
         ///     <code>
         ///         static void Enter(object wrapper)
         ///         {
-        ///             var anonymousTypeHolder = wrapper.CastTo(new { x = 0, y = string.Empty });
+        ///             var anonymousTypeHolder = wrapper.CastToAnonymous(new { x = 0, y = string.Empty });
         ///             Console.WriteLine($"{anonymousTypeHolder.x} : {anonymousTypeHolder.y}");
         ///         }
         ///     </code>
@@ -19,7 +19,7 @@
         /// <param name="value">Wrapper for an anonymous object</param>
         /// <param name="target">Variable provided for type inference</param>
         /// <returns>Wrapper casted to the inferred anonymous type</returns>
-        //public static TTarget CastTo<TTarget>(this object value, TTarget target = default)
+        //public static TTarget CastToAnonymous<TTarget>(this object value, TTarget target = default)
         //{
         //    return (TTarget)value;
         //}

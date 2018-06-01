@@ -10,10 +10,23 @@
         /// </summary>
         /// <typeparam name="T">Any available type</typeparam>
         /// <param name="sourceArray">Array which elements should be initialized or set to defaults (<c>default(T)</c>)</param>
+        /// <remarks>Performance-oriented algorithm selection.</remarks>
         public static void SelfSetToDefaults<T>(this T[] sourceArray)
         {
-            for (int i = 0; i < sourceArray.Length; i++)
-                sourceArray[i] = default(T);
+            if (sourceArray.Length <= 76)
+            {
+                for (int i = 0; i < sourceArray.Length; i++)
+                {
+                    sourceArray[i] = default(T);
+                }
+            }
+            else
+            { // 77+
+                Array.Clear(
+                    array: sourceArray,
+                    index: 0,
+                    length: sourceArray.Length);
+            }
         }
 
         /// <summary>

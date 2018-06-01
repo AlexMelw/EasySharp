@@ -46,8 +46,11 @@
   <ItemGroup>
     <Compile Include="Collections\Extensions\ArrayExtensions.cs" />
     <Compile Include="Common\Extensions\ConvertExtensions.cs" />
+    <Compile Include="Common\Extensions\DynamicExtensions.cs" />
+    <Compile Include="Common\Extensions\EnumExtensions.cs" />
     <Compile Include="ExceptionsDealing\Extensions\MaybeExtensions.cs" />
     <Compile Include="Networking\Extensions\UriExtensions.cs" />
+    <Compile Include="Utils\DynamicUtil.cs" />
     <Compile Include="XML\Extensions\XmlExtensions.cs" />
     <Compile Include="ExceptionsDealing\Containers\Maybe.cs" />
     <Compile Include="ExceptionsDealing\Operational\SafePodCreator.cs" />
